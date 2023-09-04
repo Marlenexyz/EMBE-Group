@@ -19,10 +19,10 @@ void Digital_in::init()
 
 bool Digital_in::is_hi()
 {
-    return PINB & _pinmask;
+    return (PINB & _pinmask) != 0;
 }
 
 bool Digital_in::is_lo()
 {
-   return !(PINB & _pinmask);
+   return (PINB & _pinmask) == 0;
 }

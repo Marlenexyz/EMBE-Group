@@ -1,5 +1,8 @@
 #include <stdint.h>
 
+#ifndef DIGITAL_OUT_H
+#define DIGITAL_OUT_H
+
 class Digital_out
 {
 public: 
@@ -14,4 +17,4 @@ private:
     uint8_t pinMask;  //used in register operations
 };
 
-
+#endif

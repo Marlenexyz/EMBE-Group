@@ -1,5 +1,8 @@
 #include <stdint.h>
 
+#ifndef DIGITAL_IN_H
+#define DIGITAL_IN_H
+
 class Digital_in
 {  
     public:
@@ -10,3 +13,5 @@ class Digital_in
     private:
         uint8_t _pinmask;
 };
+
+#endif
