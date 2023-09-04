@@ -1,45 +1,45 @@
+#include <Arduino.h>
+
 #include <avr/delay.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#include <digital_out.h>
 #include <digital_in.h>
+#include <digital_out.h>
 #include <encoder.h>
-
-#include <Arduino.h>
-
 
 int main()
 {
-    Serial.begin(9600);
+    // Digital_in c1(2);
+    // Digital_in c2(3);
+    // Digital_out led(5);
+    // Encoder encoder(c1, c2, led);
 
-    // Digital_in C1(0);
-    // Digital_in C2(4);
-    // Digital_out LED(5);
-    // Encoder encoder(C1, C2, LED);
+    // c1.init();
+    // c2.init();
+    // led.init();
+    // encoder.init();
 
-    // C1.init();
-    // C2.init();
-    // LED.init();
-
-    DDRD &= ~(1 << DDD3);
-    PORTD |= (1 << PORTD3);
-    EICRA |= (1 << ISC11) | (1 << ISC10);
-    EIMSK |= (1 << INT1);
+    DDRD &= ~(1 << DDD2);
+    PORTD |= (1 << PORTD2);
+    EICRA |= (1 << ISC01) | (1 << ISC00);
+    EIMSK |= (1 << INT0);
     sei();
+
+    Serial.begin(9600);
 
     while(1)
     {
-        // _delay_us(330);
         // Serial.println(encoder.position());
+        // _delay_us(330);
     }
 
     return 0;
 }
 
-ISR(INT1_vect)
+ISR(INT0_vect)
 {
     static unsigned int counter = 0;
-    counter ++;
+    counter++;
     Serial.println(counter);
 }

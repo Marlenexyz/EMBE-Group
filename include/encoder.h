@@ -7,19 +7,19 @@
 class Encoder
 {
     public:
+        Encoder(Digital_in& c1, Digital_in& c2, Digital_out& led);
 
-        Encoder(Digital_in C1, Digital_in C2, Digital_out LED);
+        void init();
         unsigned int position();
 
     private:
-    
         Digital_in mC1;
         Digital_in mC2;
-        Digital_out mLED;
+        Digital_out mLed;
 
-        bool lastState;
-        bool currentState;
-        unsigned int count;
+        bool mLastState;
+        bool mCurrentState;
+        unsigned int mCount;
     
 };
 

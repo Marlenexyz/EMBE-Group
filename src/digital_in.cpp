@@ -1,28 +1,23 @@
-#include <digital_in.h>
-#include <avr/io.h>        
+#include "digital_in.h"
+#include <avr/io.h>
 
-
-
-Digital_in::Digital_in(int pin) 
+Digital_in::Digital_in(int pin)
 {
-    _pinmask = (1 << pin);
+    pinMask = (1 << pin);
 }
 
-
 void Digital_in::init()
-{  
-    //DDRB |= pinMask;
-    PORTB |= _pinmask;
-
-    DDRB &= ~_pinmask;
+{
+    DDRD &= ~pinMask;
+    PORTD |= pinMask;
 }
 
 bool Digital_in::is_hi()
 {
-    return (PINB & _pinmask) != 0;
+    return (PIND & pinMask) != 0;
 }
 
 bool Digital_in::is_lo()
 {
-   return (PINB & _pinmask) == 0;
+    return (PIND & pinMask) == 0;
 }

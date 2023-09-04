@@ -1,27 +1,27 @@
+#include "digital_out.h"
 #include <avr/io.h>
-#include <digital_out.h>
 
-Digital_out::Digital_out(int pinNumber) : pinMask(1 << pinNumber)
+Digital_out::Digital_out(int pin)
 {
-
+    pinMask = (1 << pin);
 }
 
 void Digital_out::init()
 {
-        DDRB |= pinMask;
+    DDRB |= pinMask;
 }
 
 void Digital_out::set_hi()
 {
-        PORTB |= pinMask;
-    }
+    PORTB |= pinMask;
+}
 
 void Digital_out::set_lo()
-    {
-        PORTB &= ~pinMask;
-    }
+{
+    PORTB &= ~pinMask;
+}
 
 void Digital_out::toggle()
-    {
-        PORTB ^= pinMask;
-    }
+{
+    PORTB ^= pinMask;
+}
