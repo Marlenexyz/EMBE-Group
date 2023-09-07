@@ -24,7 +24,7 @@ void Encoder::init()
 
 int Encoder::position()
 {
-    // Measure current C1f and C2 state
+    // Measure current C1 and C2 state
     mCrtC1 = mC1.is_hi();
     mCrtC2 = mC2.is_hi();
 
