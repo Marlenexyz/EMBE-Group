@@ -6,61 +6,67 @@
 
 #include <digital_in.h>
 #include <digital_out.h>
+#include <analog_out.h>
 #include <encoder.h>
 
-static bool isTriggered = false;
-static int counter = 0;
+static unsigned long timeLast = 0;
+static unsigned long timeCrt = 0;
+static float omega = 0.0;
 
 Digital_in c1(2);
 Digital_in c2(3);
-Digital_out led(5);
-Encoder encoder(c1, c2, led);
+// Analog_out m1(4);
+Analog_out m2(5);
 
-int main()
+void setup()
 {
-    // --- PART 1/2 ------------------------------------------------------
     Serial.begin(9600);
 
-    c1.init();
     c2.init();
-    led.init();
-    encoder.init();
+    // m1.init(1, 0);
+    m2.init(1, 0.9);
 
-    while(1)
-    {
-        counter = encoder.position();
-        if(counter % 70 == 0 && counter != 0)
-        {
-            Serial.println(encoder.position());
-        }
-    }
+    DDRD &= ~(1 << DDD2);
+    PORTD |= (1 << PORTD2);
+    EICRA |= (1 << ISC01) | (1 << ISC00);
+    EIMSK |= (1 << INT0);
+    sei();
+}
 
-    // --- PART 3 --------------------------------------------------------
-    // Serial.begin(9600);
-
-    // c2.init();
-
-    // DDRD &= ~(1 << DDD2);
-    // PORTD |= (1 << PORTD2);
-    // EICRA |= (1 << ISC01) | (1 << ISC00);
-    // EIMSK |= (1 << INT0);
-    // sei();
-
-    // while(1)
-    // {
-    //     _delay_ms(10);
-    //     Serial.println(counter);
-    // }
+void loop()
+{
+    delay(1000);
+    Serial.println(omega);
+    omega = 0;
 }
 
 ISR(INT0_vect)
 {
-    if(c2.is_lo())
+    timeCrt = micros();
+
+    if(timeLast > 0)
     {
-        counter++;
+        unsigned long period = timeCrt - timeLast;
+        omega = 2.0f * 3.1415926535f / (static_cast<float>(period) * 700.0f / 1000000.0f );
     }
-    else
+
+    if(c2.is_hi())
     {
-        counter--;
+        omega = -omega;
     }
+
+    timeLast = timeCrt;
 }
+
+
+
+ISR(TIMER1_COMPA_vect)
+{
+    m2.pin.set_hi();
+}
+
+ISR(TIMER1_COMPB_vect)
+{
+    m2.pin.set_lo();
+}
+
