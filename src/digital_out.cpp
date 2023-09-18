@@ -1,27 +1,39 @@
 #include "digital_out.h"
 #include <avr/io.h>
 
-Digital_out::Digital_out(int pin)
-{
+Digital_out::Digital_out(int pin, char portType){
     pinMask = (1 << pin);
+    if (portType == 'B'){
+        portRegister = &PORTB;
+        drrRegister = &DDRB;
+    }
+    else if (portType == 'C'){
+        portRegister = &PORTC;
+        drrRegister = &DDRC;
+    }
+    else if (portType == 'D'){ 
+        portRegister = &PORTD;
+        drrRegister = &DDRD;
+    }
+
 }
 
 void Digital_out::init()
 {
-    DDRD |= pinMask;
+    *drrRegister |= pinMask;
 }
 
 void Digital_out::set_hi()
 {
-    PORTD |= pinMask;
+    *portRegister |= pinMask;
 }
 
 void Digital_out::set_lo()
 {
-    PORTD &= ~pinMask;
+    *portRegister &= ~pinMask;
 }
 
 void Digital_out::toggle()
 {
-    PORTD ^= pinMask;
+    *portRegister ^= pinMask;
 }

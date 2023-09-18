@@ -6,7 +6,7 @@
 class Digital_in
 {
     public:
-        Digital_in(int pin);
+        Digital_in(int pin, char portType);
         
         void init();
         bool is_hi();
@@ -14,6 +14,10 @@ class Digital_in
     
     private:
         uint8_t pinMask;
+        char portType;
+        volatile uint8_t *portRegister;
+        volatile uint8_t *drrRegister;
+        volatile uint8_t *pinRegister;
 
 };
 
