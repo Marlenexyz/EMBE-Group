@@ -10,16 +10,16 @@
 #include <encoder.h>
 #include <P_controller.h>
 
-static unsigned long timeLast = 0;
-static unsigned long timeCrt = 0;
+// static unsigned long timeLast = 0;
+// static unsigned long timeCrt = 0;
 static float omega = 0.0;
 
 static float refOmega = 6.0;
 
-Digital_in c1(2);
-Digital_in c2(3);
-Analog_out m1(4);
-Digital_out m2(5);
+Digital_in c1(2,'D');
+Digital_in c2(3,'D');
+Analog_out m1(4,'D');
+Digital_out m2(5,'D');
 
 Encoder encoder(c1, c2, m1, m2);
 P_controller controller(1.0, encoder);

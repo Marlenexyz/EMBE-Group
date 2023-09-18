@@ -7,7 +7,7 @@
 class Analog_out
 {
     public:
-        Analog_out(int pin);
+        Analog_out(int pin, char portType);
         void init(int period_ms = 1000, float duty_cycle = 0.5);
         void set_duty_cycle(float duty_cycle);
 
