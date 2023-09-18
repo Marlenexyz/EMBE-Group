@@ -1,12 +1,10 @@
 #include "analog_out.h"
 #include <avr/io.h>
 
-Analog_out::Analog_out(int pin) :
-    timer(),
-    pin(pin)
-{
-
+Analog_out::Analog_out(int pin, char portType): pin(pin,portType){      
 }
+
+
 
 void Analog_out::init(int period_ms, float duty_cycle)
 {
