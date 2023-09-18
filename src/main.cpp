@@ -6,39 +6,33 @@
 
 #include <digital_in.h>
 #include <digital_out.h>
+#include <analog_out.h>
 #include <encoder.h>
+#include <P_controller.h>
 
-static bool isTriggered = false;
-static int counter = 0;
+static unsigned long timeLast = 0;
+static unsigned long timeCrt = 0;
+static float omega = 0.0;
+
+static float refOmega = 6.0;
 
 Digital_in c1(2);
 Digital_in c2(3);
-Digital_out led(5);
-Encoder encoder(c1, c2, led);
+Analog_out m1(4);
+Digital_out m2(5);
 
-int main()
+Encoder encoder(c1, c2, m1, m2);
+P_controller controller(1.0, encoder);
+
+void setup()
 {
-    // --- PART 1/2 ------------------------------------------------------
-    // Serial.begin(9600);
-
-    // c1.init();
-    // c2.init();
-    // led.init();
-    // encoder.init();
-
-    // while(1)
-    // {
-    //     counter = encoder.position();
-    //     if(counter % 70 == 0 && counter != 0)
-    //     {
-    //         Serial.println(encoder.position());
-    //     }
-    // }
-
-    // --- PART 3 --------------------------------------------------------
     Serial.begin(9600);
 
     c2.init();
+    m1.init(10, 0.0);
+    m2.init();
+    encoder.init();
+    controller.init();
 
     DDRD &= ~(1 << DDD2);
     PORTD |= (1 << PORTD2);
@@ -46,21 +40,33 @@ int main()
     EIMSK |= (1 << INT0);
     sei();
 
-    while(1)
-    {
-        _delay_ms(10);
-        Serial.println(counter);
-    }
+    // encoder.setSpeed(6);
+}
+
+void loop()
+{
+    delayMicroseconds(2);
+
+    omega = encoder.getSpeed();
+    controller.update(refOmega, omega);
+    Serial.println(omega);
+
+    // omega = 0;
 }
 
 ISR(INT0_vect)
 {
-    if(c2.is_lo())
-    {
-        counter++;
-    }
-    else
-    {
-        counter--;
-    }
+    omega = encoder.getSpeed();
+}
+
+
+
+ISR(TIMER1_COMPA_vect)
+{
+    m1.pin.set_hi();
+}
+
+ISR(TIMER1_COMPB_vect)
+{
+    m1.pin.set_lo();
 }

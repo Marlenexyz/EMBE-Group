@@ -8,20 +8,20 @@ Digital_out::Digital_out(int pin)
 
 void Digital_out::init()
 {
-    DDRB |= pinMask;
+    DDRD |= pinMask;
 }
 
 void Digital_out::set_hi()
 {
-    PORTB |= pinMask;
+    PORTD |= pinMask;
 }
 
 void Digital_out::set_lo()
 {
-    PORTB &= ~pinMask;
+    PORTD &= ~pinMask;
 }
 
 void Digital_out::toggle()
 {
-    PORTB ^= pinMask;
+    PORTD ^= pinMask;
 }
