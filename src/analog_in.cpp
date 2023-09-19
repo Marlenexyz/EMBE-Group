@@ -13,12 +13,12 @@ void Analog_in::init()
     DDRC &= ~pinMask;
 
     // Reset register
-    ADMUX |= 0;
+    ADMUX = 0;
     // Select ADC channel
     ADMUX |= pinMask;
 
     // Reset register
-    ADCSRA |= 0;
+    ADCSRA = 0;
     // Enable ADC
     ADCSRA |= (1 << ADEN);
     // Set prescaler to 128
