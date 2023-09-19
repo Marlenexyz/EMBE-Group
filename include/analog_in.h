@@ -7,8 +7,9 @@
 class Analog_in
 {
     public:
-        Analog_in(int pin, float refVolt);
-        void init();
+        Analog_in();
+        virtual ~Analog_in();
+        void init(int pin, float refVolt);
         float get_duty_cycle();
 
     private:

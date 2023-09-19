@@ -1,14 +1,23 @@
 #include "analog_in.h"
 #include <avr/io.h>
 
-Analog_in::Analog_in(int pin, float refVolt)
+Analog_in::Analog_in()
+{
+    mPinMask = 0;
+    mRefVolt = 0;
+}
+
+Analog_in::~Analog_in()
+{
+    mPinMask = 0;
+    mRefVolt = 0;
+}
+
+void Analog_in::init(int pin, float refVolt)
 {
     mPinMask = (1 << pin);
     mRefVolt = refVolt;
-}
-
-void Analog_in::init()
-{
+    
     // Set pin as input
     DDRC &= ~mPinMask;
 
