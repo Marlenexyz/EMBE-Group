@@ -7,13 +7,13 @@
 class Analog_in
 {
     public:
-        Analog_in(int pin, float ref);
+        Analog_in(int pin, float refVolt);
         void init();
         float get_duty_cycle();
 
     private:
-        uint8_t pinMask;
-        float refVolt;
+        uint8_t mPinMask;
+        float mRefVolt;
 
 };
 

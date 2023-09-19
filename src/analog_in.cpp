@@ -1,21 +1,21 @@
 #include "analog_in.h"
 #include <avr/io.h>
 
-Analog_in::Analog_in(int pin, float ref)
+Analog_in::Analog_in(int pin, float refVolt)
 {
-    pinMask = (1 << pin);
-    refVolt = ref;
+    mPinMask = (1 << pin);
+    mRefVolt = refVolt;
 }
 
 void Analog_in::init()
 {
     // Set pin as input
-    DDRC &= ~pinMask;
+    DDRC &= ~mPinMask;
 
     // Reset register
     ADMUX = 0;
     // Select ADC channel
-    ADMUX |= pinMask;
+    ADMUX |= mPinMask;
 
     // Reset register
     ADCSRA = 0;
@@ -35,5 +35,5 @@ float Analog_in::get_duty_cycle()
     // Read data
     uint16_t data = ADATE;
     // Convert data to voltage
-    return (static_cast<float>(data) / 1023.0f) * refVolt;
+    return (static_cast<float>(data) / 1023.0f) * mRefVolt;
 }
