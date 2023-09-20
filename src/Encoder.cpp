@@ -60,7 +60,7 @@ float Encoder::getSpeed()
     return crtOmega;
 }
 
-void Encoder::setSpeed(float omega)
+/*void Encoder::setSpeed(float omega)
 {
     // max freq of f_update
     float duty = omega / maxOmega;
@@ -82,4 +82,4 @@ void Encoder::setSpeed(float omega)
     {
 
     }
-}
+}*/

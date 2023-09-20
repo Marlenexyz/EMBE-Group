@@ -13,7 +13,7 @@ class Encoder
         void init();
         int position();
         float getSpeed();
-        void setSpeed(float omega);
+        //void setSpeed(float omega);
 
     private:
         Digital_in mC1;

@@ -22,7 +22,7 @@ Analog_out m1(4,'D');
 Digital_out m2(5,'D');
 
 Encoder encoder(c1, c2, m1, m2);
-P_controller controller(1.0, encoder);
+P_controller controller(1.0, m1,m2);
 
 void setup()
 {
