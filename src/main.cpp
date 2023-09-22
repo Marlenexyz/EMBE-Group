@@ -11,9 +11,8 @@
 #include <P_controller.h>
 
 // static unsigned long tau = 0;
-static float omega = 0.0;
-
-static float refOmega = 2;
+static float omega = 0.0f;
+static float refOmega = 8.0f;
 
 Digital_in c1(2,'D');
 Digital_in c2(3,'D');
@@ -27,19 +26,14 @@ void setup()
 {
     Serial.begin(9600);
 
-    // pinMode(5, OUTPUT);
-    // analogWrite(5, 127);
-
-    encoder.init();
-    controller.init(12.48, 7);
-
-    // encoder.setSpeed(6);
+    encoder.init(12.48f);
+    controller.init(12.48f, 7.0f);
 }
 
 void loop()
 {
     delay(2);
-    Serial.print("w_ref: ");
+    Serial.print(", w_ref: ");
     Serial.print(refOmega);
     Serial.print(", w: ");
     Serial.print(omega);

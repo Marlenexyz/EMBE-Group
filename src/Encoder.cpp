@@ -9,7 +9,7 @@ Encoder::Encoder(Digital_in& c1, Digital_in& c2) :
 
 }
 
-void Encoder::init()
+void Encoder::init(float maxOmega)
 {
     // gear ratio 1:100
     // number of mirrors 14
@@ -17,6 +17,7 @@ void Encoder::init()
     // C1C2 counterclockwise: 00 01 11 10
 
     omega = 0.0;
+    mMaxOmega = maxOmega;
 
     lastTime = 0;
     crtTime = 0;
@@ -59,9 +60,11 @@ unsigned long Encoder::getTau()
     if(lastTime > 0)
     {
         unsigned long period = crtTime - lastTime;
-        omega = 2.0f * 3.1415926535f / (static_cast<float>(period) * 700.0f / 1000000.0f );
+        omega = 2.0f * 3.1415926535f / (static_cast<float>(period) * 700.0f / 1000000.0f);
+        Serial.print("rps: ");
+        Serial.print(1 / (static_cast<float>(period) * 700.0f / 1000000.0f));
 
-        if(omega >= 0.63 * maxOmega)
+        if(omega >= 0.63 * mMaxOmega)
         {
             return crtTime - startTime;
         }
