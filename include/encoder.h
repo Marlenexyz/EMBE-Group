@@ -8,27 +8,22 @@
 class Encoder
 {
     public:
-        Encoder(Digital_in& c1, Digital_in& c2, Analog_out& m1, Digital_out& m2);
+        Encoder(Digital_in& c1, Digital_in& c2);
 
         void init();
-        int position();
         float getSpeed();
-        //void setSpeed(float omega);
+        unsigned long getTau();
 
     private:
         Digital_in mC1;
         Digital_in mC2;
 
-        Analog_out mM1;
-        Digital_out mM2;
-
-        float lastOmega;
-        float crtOmega;
+        float omega;
 
         unsigned long lastTime;
         unsigned long crtTime;
 
-        static constexpr float maxOmega = 12.5; // rad/s
+        static constexpr float maxOmega = 12.48f; // rad/s
     
 };
 
