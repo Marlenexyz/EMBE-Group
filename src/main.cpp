@@ -10,8 +10,7 @@
 #include <encoder.h>
 #include <P_controller.h>
 
-// static unsigned long timeLast = 0;
-// static unsigned long timeCrt = 0;
+static unsigned long tau = 0;
 static float omega = 0.0;
 
 static float refOmega = 6.0;
@@ -21,41 +20,40 @@ Digital_in c2(3,'D');
 Analog_out m1(4,'D');
 Digital_out m2(5,'D');
 
-Encoder encoder(c1, c2, m1, m2);
-P_controller controller(1.0, encoder);
+Encoder encoder(c1, c2);
+P_controller controller(1.0, m1, m2);
 
 void setup()
 {
     Serial.begin(9600);
 
-    c2.init();
-    m1.init(10, 0.0);
+    m1.init(10, 0.5f);
     m2.init();
+    m2.set_lo();
     encoder.init();
     controller.init();
-
-    DDRD &= ~(1 << DDD2);
-    PORTD |= (1 << PORTD2);
-    EICRA |= (1 << ISC01) | (1 << ISC00);
-    EIMSK |= (1 << INT0);
-    sei();
 
     // encoder.setSpeed(6);
 }
 
 void loop()
 {
-    delayMicroseconds(2);
+    // delayMicroseconds(2);
 
-    omega = encoder.getSpeed();
-    controller.update(refOmega, omega);
+    // controller.update(refOmega, omega);
     Serial.println(omega);
 
-    // omega = 0;
+    if(tau > 0)
+    {
+        Serial.print("Tau in µs: ");
+        Serial.println(tau);
+        delay(1000000);
+    }
 }
 
 ISR(INT0_vect)
 {
+    // tau = encoder.getTau();
     omega = encoder.getSpeed();
 }
 

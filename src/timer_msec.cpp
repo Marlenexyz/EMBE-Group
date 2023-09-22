@@ -25,7 +25,7 @@ void Timer_msec::init(int period_ms, float duty_cycle)
     TCNT1 = 0;
 
     OCR1A = 16000000 / 1024 * period_ms / 1000 - 1;
-    OCR1B = OCR1A * duty_cycle;
+    OCR1B = OCR1A * duty_cycle - 1;
     TCCR1B |= (1 << WGM12);
     TIMSK1 |= (1 << OCIE1A);
     TIMSK1 |= (1 << OCIE1B);
