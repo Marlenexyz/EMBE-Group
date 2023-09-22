@@ -8,18 +8,18 @@
 class P_controller
 {
     public:
-        P_controller(double kp, Analog_out& m1, Digital_out& m2);
+        P_controller(Analog_out& m1, Analog_out& m2);
                 
-        void init();
-        double update(double ref, double actual);
+        void init(float maxOmega, float kp);
+        float update(float ref, float actual);
         void setSpeed(float omega);
     
     private:
-        double mKp;
+        float mKp;
 
-        static constexpr float maxOmega = 12.5; // rad/s
+        float mMaxOmega; // rad/s
         Analog_out mM1;
-        Digital_out mM2;
+        Analog_out mM2;
 
 };
 

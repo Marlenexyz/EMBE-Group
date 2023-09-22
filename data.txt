@@ -1,0 +1,13 @@
+w_ref: 8.00, w: 7.48, duty: 0.06
+w_ref: 8.00, w: 8.16, duty: 0.01
+w_ref: 8.00, w: 6.60, duty: 0.83
+w_ref: 8.00, w: 6.64, duty: 0.71
+w_ref: 8.00, w: 7.12, duty: 0.50
+w_ref: 8.00, w: 6.88, duty: 0.67
+w_ref: 8.00, w: 6.56, duty: 0.74
+w_ref: 8.00, w: 6.78, duty: 0.67
+w_ref: 8.00, w: 6.95, duty: 0.63
+w_ref: 8.00, w: 6.84, duty: 0.72
+w_ref: 8.00, w: 6.90, duty: 0.64
+w_ref: 8.00, w: 6.80, duty: 0.68
+w_ref: 8.00, w: 6.64, duty: 0.68

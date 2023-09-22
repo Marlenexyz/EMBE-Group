@@ -10,61 +10,73 @@
 #include <encoder.h>
 #include <P_controller.h>
 
-static unsigned long tau = 0;
+// static unsigned long tau = 0;
 static float omega = 0.0;
 
-static float refOmega = 6.0;
+static float refOmega = 2;
 
 Digital_in c1(2,'D');
 Digital_in c2(3,'D');
 Analog_out m1(4,'D');
-Digital_out m2(5,'D');
+Analog_out m2(5,'D');
 
 Encoder encoder(c1, c2);
-P_controller controller(1.0, m1, m2);
+P_controller controller(m1, m2);
 
 void setup()
 {
     Serial.begin(9600);
 
-    m1.init(10, 0.5f);
-    m2.init();
-    m2.set_lo();
+    // pinMode(5, OUTPUT);
+    // analogWrite(5, 127);
+
     encoder.init();
-    controller.init();
+    controller.init(12.48, 7);
 
     // encoder.setSpeed(6);
 }
 
 void loop()
 {
-    // delayMicroseconds(2);
+    delay(2);
+    Serial.print("w_ref: ");
+    Serial.print(refOmega);
+    Serial.print(", w: ");
+    Serial.print(omega);
+    controller.update(refOmega, omega);
 
-    // controller.update(refOmega, omega);
-    Serial.println(omega);
-
-    if(tau > 0)
-    {
-        Serial.print("Tau in µs: ");
-        Serial.println(tau);
-        delay(1000000);
-    }
+    // if(tau > 0)
+    // {
+    //     Serial.print("Tau in µs: ");
+    //     Serial.println(tau);
+    //     delay(1000000);
+    // }
 }
 
 ISR(INT0_vect)
 {
-    // tau = encoder.getTau();
     omega = encoder.getSpeed();
+    // tau = encoder.getTau();
 }
 
 
 
-ISR(TIMER1_COMPA_vect)
+ISR(TIMER2_COMPA_vect)
 {
     m1.pin.set_hi();
 }
 
-ISR(TIMER1_COMPB_vect)
+ISR(TIMER2_COMPB_vect)
 {
     m1.pin.set_lo();
+}
+
+ISR(TIMER1_COMPA_vect)
+{
+    m2.pin.set_hi();
+}
+
+ISR(TIMER1_COMPB_vect)
+{
+    m2.pin.set_lo();
 }
