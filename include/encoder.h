@@ -10,7 +10,7 @@ class Encoder
     public:
         Encoder(Digital_in& c1, Digital_in& c2);
 
-        void init();
+        void init(float maxOmega);
         float getSpeed();
         unsigned long getTau();
 
@@ -19,11 +19,11 @@ class Encoder
         Digital_in mC2;
 
         float omega;
+        float mMaxOmega; // rad/s
 
         unsigned long lastTime;
         unsigned long crtTime;
 
-        static constexpr float maxOmega = 12.48f; // rad/s
     
 };
 
