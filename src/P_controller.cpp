@@ -3,7 +3,9 @@
 
 P_controller::P_controller(Analog_out& m1, Analog_out& m2):
     mM1(m1),
-    mM2(m2)
+    mM2(m2),
+    button(6,'D'),
+    sleep(7,'D')
 {
 }
 
@@ -11,6 +13,7 @@ void P_controller::init(float maxOmega, float kp)
 {
     mMaxOmega = maxOmega;
     mKp = kp;
+    sleep.set_hi();
 
     mM1.init(2, 1, 0.5f);
     mM2.init(1, 1, 0.0f);
@@ -51,4 +54,13 @@ void P_controller::setSpeed(float omega)
         mM1.set_duty_cycle(0.0f);
         mM2.set_duty_cycle(duty);
     }
+}
+
+void P_controller::brake(){
+
+    if(button.is_lo())
+    {
+        sleep.set_lo();
+    }
+
 }
