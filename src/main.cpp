@@ -71,7 +71,7 @@ void loop()
                 context->event_reset();
                 break;
             case 's':
-                Serial.println("I received a stop command.");
+                Serial.println("I received a set operational command.");
                 context->event_set_operational();
                 break;
             default:
@@ -80,30 +80,30 @@ void loop()
     }
 }
 
-// ISR(INT0_vect)
-// {
-//     omega = encoder.getSpeed();
-//     // tau = encoder.getTau();
-// }
+ISR(INT0_vect)
+{
+    // omega = encoder.getSpeed();
+    // tau = encoder.getTau();
+}
 
 
 
-// ISR(TIMER2_COMPA_vect)
-// {
-//     m1.pin.set_hi();
-// }
+ISR(TIMER2_COMPA_vect)
+{
+    // m1.pin.set_hi();
+}
 
-// ISR(TIMER2_COMPB_vect)
-// {
-//     m1.pin.set_lo();
-// }
+ISR(TIMER2_COMPB_vect)
+{
+    // m1.pin.set_lo();
+}
 
-// ISR(TIMER1_COMPA_vect)
-// {
-//     m2.pin.set_hi();
-// }
+ISR(TIMER1_COMPA_vect)
+{
+    // m2.pin.set_hi();
+}
 
-// ISR(TIMER1_COMPB_vect)
-// {
-//     m2.pin.set_lo();
-// }
+ISR(TIMER1_COMPB_vect)
+{
+    // m2.pin.set_lo();
+}

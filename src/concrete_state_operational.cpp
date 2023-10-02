@@ -6,7 +6,12 @@
 
 void Concrete_state_operational::on_do()
 {
-
+    delay(2);
+    Serial.print(", w_ref: ");
+    Serial.print(this->context_->refOmega);
+    Serial.print(", w: ");
+    Serial.print(this->context_->omega);
+    this->context_->controller.update(this->context_->refOmega, this->context_->omega);
 }
 
 void Concrete_state_operational::on_entry()

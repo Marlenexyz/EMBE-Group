@@ -1,5 +1,11 @@
 #include <state.h>
 
+#include <digital_in.h>
+#include <digital_out.h>
+#include <analog_out.h>
+#include <encoder.h>
+#include <P_controller.h>
+
 #ifndef CONTEXT_H
 #define CONTEXT_H
 
@@ -19,7 +25,17 @@ private:
     State *state_;
 
 public:
-    Context(State *state) : state_(nullptr)
+    Context(State *state) : 
+        state_(nullptr),
+        tau(0),
+        omega(0.0f),
+        refOmega(8.0f),
+        c1(2, 'D'),
+        c2(3, 'D'),
+        m1(4, 'D'),
+        m2(5, 'D'),
+        encoder(c1, c2),
+        controller(m1, m2)
     {
         this->transition_to(state);
     }
@@ -66,6 +82,22 @@ public:
     {
         this->state_->on_event_set_operational();
     }
+
+    /**
+     * The Context holds globaly used objects and variables.
+     */
+
+    unsigned long tau = 0;
+    float omega = 0.0f;
+    float refOmega = 8.0f;
+
+    Digital_in c1;
+    Digital_in c2;
+    Analog_out m1;
+    Analog_out m2;
+
+    Encoder encoder;
+    P_controller controller;
 
 };
 

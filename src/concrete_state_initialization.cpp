@@ -12,6 +12,8 @@ void Concrete_state_initialization::on_do()
 void Concrete_state_initialization::on_entry()
 {
     Serial.println("Transitioned to Initialization state.");
+    this->context_->encoder.init(12.48f);
+    this->context_->controller.init(12.48f, 7.0f);
 }
 
 void Concrete_state_initialization::on_exit()
