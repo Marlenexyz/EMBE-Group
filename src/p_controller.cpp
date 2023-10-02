@@ -5,7 +5,10 @@ P_controller::P_controller(Analog_out &m1, Analog_out &m2, Digital_in& button, D
     mM1(m1),
     mM2(m2),
     mButton(button),
-    mSleep(sleep)
+    mSleep(sleep),
+    mKp(0.0f),
+    mOmegaMax(0.0f),
+    duty(0.0f)
 {
 }
 
@@ -40,18 +43,17 @@ float P_controller::update(float ref, float actual)
 
 void P_controller::updateSpeed(float omega)
 {
-    // max freq of f_update
-    float duty = omega / mOmegaMax;
-    Serial.print(", duty: ");
-    Serial.println(duty);
+    duty = omega / mOmegaMax;
 
     if (duty >= 1.0)
     {
+        duty = 1.0f;
         mM2.set_duty_cycle(0.0f);
         mM1.set_duty_cycle(0.999f);
     }
     else if (duty <= -1.0f)
     {
+        duty = -1.0f;
         mM1.set_duty_cycle(0.0f);
         mM2.set_duty_cycle(0.999f);
     }
@@ -63,7 +65,7 @@ void P_controller::updateSpeed(float omega)
     else if (duty < 0)
     {
         mM1.set_duty_cycle(0.0f);
-        mM2.set_duty_cycle(duty);
+        mM2.set_duty_cycle(-duty);
     }
 }
 

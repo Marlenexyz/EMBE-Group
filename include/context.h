@@ -34,6 +34,7 @@ public:
         m2(PIN_M2, PORT_M2),
         button(PIN_BUTTON, PORT_BUTTON),
         sleep(PIN_SLEEP, PORT_SLEEP),
+        led(PIN_LED, PORT_LED),
         encoder(c1, c2),
         controller(m1, m2, button, sleep),
         tau(0),
@@ -96,6 +97,7 @@ public:
     Analog_out m2;
     Digital_in button;
     Digital_out sleep;
+    Digital_out led;
     Encoder encoder;
     P_controller controller;
 

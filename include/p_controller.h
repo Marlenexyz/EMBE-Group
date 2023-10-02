@@ -17,13 +17,17 @@ public:
     void updateBrake();
 
 private:
-    float mKp;
-    float mOmegaMax; // rad/s
-
     Analog_out mM1;
     Analog_out mM2;
     Digital_in mButton;
     Digital_out mSleep;
+
+    float mKp;
+    float mOmegaMax; // rad/s
+
+public:
+    float duty;
+
 };
 
 #endif

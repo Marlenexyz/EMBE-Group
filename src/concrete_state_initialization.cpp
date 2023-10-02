@@ -12,6 +12,7 @@ void Concrete_state_initialization::on_do()
 void Concrete_state_initialization::on_entry()
 {
     Serial.println("Transitioned to Initialization state.");
+    this->context_->led.init();
     this->context_->encoder.init(OMEGA_MAX);
     this->context_->controller.init(OMEGA_MAX, P_CTRL_KP);
 }

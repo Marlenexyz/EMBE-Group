@@ -25,6 +25,9 @@
 #define PORT_SLEEP          'D'
 #define PIN_SLEEP           7
 
+#define PORT_LED            'B'
+#define PIN_LED             5
+
 
 
 #define OMEGA_MAX           12.48f
