@@ -24,7 +24,7 @@ void loop()
         // read the incoming byte:
         command = Serial.read();
 
-        // you can compare the value received to a character constant, like 'g'.
+        // you can compare the value received to a character constant, like 'r'.
         switch (command)
         {
         case 'r':
