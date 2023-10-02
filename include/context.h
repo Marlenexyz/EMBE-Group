@@ -1,5 +1,6 @@
 #include <state.h>
 
+#include <defines.h>
 #include <digital_in.h>
 #include <digital_out.h>
 #include <analog_out.h>
@@ -27,15 +28,17 @@ private:
 public:
     Context(State *state) : 
         state_(nullptr),
+        c1(PIN_C1, PORT_C1),
+        c2(PIN_C2, PORT_C2),
+        m1(PIN_M1, PORT_M1),
+        m2(PIN_M2, PORT_M2),
+        button(PIN_BUTTON, PORT_BUTTON),
+        sleep(PIN_SLEEP, PORT_SLEEP),
+        encoder(c1, c2),
+        controller(m1, m2, button, sleep),
         tau(0),
         omega(0.0f),
-        refOmega(8.0f),
-        c1(2, 'D'),
-        c2(3, 'D'),
-        m1(4, 'D'),
-        m2(5, 'D'),
-        encoder(c1, c2),
-        controller(m1, m2)
+        omegaRef(OMEGA_REF)
     {
         this->transition_to(state);
     }
@@ -87,17 +90,18 @@ public:
      * The Context holds globaly used objects and variables.
      */
 
-    unsigned long tau = 0;
-    float omega = 0.0f;
-    float refOmega = 8.0f;
-
     Digital_in c1;
     Digital_in c2;
     Analog_out m1;
     Analog_out m2;
-
+    Digital_in button;
+    Digital_out sleep;
     Encoder encoder;
     P_controller controller;
+
+    unsigned long tau;
+    float omega;
+    float omegaRef;
 
 };
 

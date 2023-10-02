@@ -8,15 +8,15 @@ void Concrete_state_operational::on_do()
 {
     delay(2);
     Serial.print(", w_ref: ");
-    Serial.print(this->context_->refOmega);
+    Serial.print(this->context_->omegaRef);
     Serial.print(", w: ");
     Serial.print(this->context_->omega);
-    this->context_->controller.update(this->context_->refOmega, this->context_->omega);
+    this->context_->controller.update(this->context_->omegaRef, this->context_->omega);
 
-    // if(tau > 0)
+    // if(this->context_->tau > 0)
     // {
     //     Serial.print("Tau in µs: ");
-    //     Serial.println(tau);
+    //     Serial.println(this->context_->tau);
     //     delay(1000000);
     // }
 }

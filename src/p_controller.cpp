@@ -1,37 +1,47 @@
 #include <p_controller.h>
 #include <Arduino.h>
 
-P_controller::P_controller(Analog_out &m1, Analog_out &m2) : mM1(m1),
-                                                             mM2(m2),
-                                                             button(7, 'D'),
-                                                             sleep(6, 'D')
+P_controller::P_controller(Analog_out &m1, Analog_out &m2, Digital_in& button, Digital_out& sleep) :
+    mM1(m1),
+    mM2(m2),
+    mButton(button),
+    mSleep(sleep)
 {
 }
 
-void P_controller::init(float maxOmega, float kp)
+void P_controller::init(float omegaMax, float kp)
 {
-    mMaxOmega = maxOmega;
+    mOmegaMax = omegaMax;
     mKp = kp;
-    sleep.set_hi();
 
+    // initialize all pins
     mM1.init(1, 1, 0.0f);
     mM2.init(2, 1, 0.0f);
-    button.init();
-    sleep.init();
+    mButton.init();
+    mSleep.init();
+
+    // set H-bridge to active
+    mSleep.set_hi();
 }
 
 float P_controller::update(float ref, float actual)
 {
+    // calculate new speed value
     float error = ref - actual;
     float value = mKp * error;
-    setSpeed(value);
+    updateSpeed(value);
+
+    // check if emergency button is pressed
+    updateBrake();
+
+    // return new speed value
     return value;
 }
 
-void P_controller::setSpeed(float omega)
+void P_controller::updateSpeed(float omega)
 {
     // max freq of f_update
-    float duty = omega / mMaxOmega;
+    float duty = omega / mOmegaMax;
     Serial.print(", duty: ");
     Serial.println(duty);
 
@@ -57,10 +67,10 @@ void P_controller::setSpeed(float omega)
     }
 }
 
-void P_controller::brake()
+void P_controller::updateBrake()
 {
-    if (button.is_lo())
+    if (mButton.is_lo())
     {
-        sleep.set_lo();
+        mSleep.set_lo();
     }
 }
