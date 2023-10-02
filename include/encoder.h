@@ -7,24 +7,22 @@
 
 class Encoder
 {
-    public:
-        Encoder(Digital_in& c1, Digital_in& c2);
+public:
+    Encoder(Digital_in &c1, Digital_in &c2);
 
-        void init(float maxOmega);
-        float getSpeed();
-        unsigned long getTau();
+    void init(float omegaMax);
+    float getSpeed();
+    unsigned long getTau();
 
-    private:
-        Digital_in mC1;
-        Digital_in mC2;
+private:
+    Digital_in mC1;
+    Digital_in mC2;
 
-        float omega;
-        float mMaxOmega; // rad/s
+    float mOmega;
+    float mOmegaMax; // rad/s
 
-        unsigned long lastTime;
-        unsigned long crtTime;
-
-    
+    unsigned long mLastTime;
+    unsigned long mCrtTime;
 };
 
 #endif
