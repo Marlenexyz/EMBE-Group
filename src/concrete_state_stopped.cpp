@@ -2,6 +2,8 @@
 
 #include "context.h"
 #include "concrete_state_initialization.h"
+#include "concrete_state_pre_operational.h"
+#include "concrete_state_operational.h"
 #include <Arduino.h>
 
 void Concrete_state_stopped::on_do()
@@ -25,7 +27,12 @@ void Concrete_state_stopped::on_event_reset()
     this->context_->transition_to(new Concrete_state_initialization);
 }
 
+void Concrete_state_stopped::on_event_set_pre_operational()
+{
+    this->context_->transition_to(new Concrete_state_pre_operational);
+}
+
 void Concrete_state_stopped::on_event_set_operational()
 {
-
+    this->context_->transition_to(new Concrete_state_operational);
 }

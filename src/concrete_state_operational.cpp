@@ -2,18 +2,13 @@
 
 #include "context.h"
 #include "concrete_state_initialization.h"
+#include "concrete_state_pre_operational.h"
 #include "concrete_state_stopped.h"
 #include <Arduino.h>
 
 void Concrete_state_operational::on_do()
 {
-    delay(2);
-    Serial.print("w_ref: ");
-    Serial.print(this->context_->omegaRef);
-    Serial.print(", w: ");
-    Serial.print(this->context_->omega);
-    Serial.print(", duty: ");
-    Serial.println(this->context_->controller.duty);
+    delay(UPDATE_RATE);
     this->context_->controller.update(this->context_->omegaRef, this->context_->omega);
     
     if (this->context_->button.is_lo() || this->context_->fault.is_lo())
@@ -44,6 +39,11 @@ void Concrete_state_operational::on_exit()
 void Concrete_state_operational::on_event_reset()
 {
     this->context_->transition_to(new Concrete_state_initialization);
+}
+
+void Concrete_state_operational::on_event_set_pre_operational()
+{
+    this->context_->transition_to(new Concrete_state_pre_operational);
 }
 
 void Concrete_state_operational::on_event_set_operational()

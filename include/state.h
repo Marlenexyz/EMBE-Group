@@ -37,6 +37,8 @@ public:
 
     virtual void on_event_reset() = 0;
 
+    virtual void on_event_set_pre_operational() = 0;
+
     virtual void on_event_set_operational() = 0;
 
     // ...

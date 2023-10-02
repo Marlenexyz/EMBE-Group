@@ -13,7 +13,9 @@ public:
 
     void init(float omegaMax, float kp);
     float update(float ref, float actual);
-    void updateSpeed(float omega);
+    void updateSpeed(float duty);
+
+    void setKp(float kp);
 
 private:
     Analog_out mM1;
@@ -21,9 +23,6 @@ private:
 
     float mKp;
     float mOmegaMax; // rad/s
-
-public:
-    float duty;
 
 };
 

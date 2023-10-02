@@ -1,14 +1,14 @@
 #include <state.h>
 
-#ifndef CONCRETE_STATE_INITIALIZATION_H
-#define CONCRETE_STATE_INITIALIZATION_H
+#ifndef CONCRETE_STATE_PRE_OPERATIONAL_H
+#define CONCRETE_STATE_PRE_OPERATIONAL_H
 
 /**
  * Concrete States implement various behaviors, associated with a state of the
  * Context.
  */
 
-class Concrete_state_initialization : public State
+class Concrete_state_pre_operational : public State
 {
 public:
 

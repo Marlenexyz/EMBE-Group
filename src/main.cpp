@@ -31,7 +31,11 @@ void loop()
             Serial.println("I received a reset command.");
             context->event_reset();
             break;
-        case 's':
+        case 'p':
+            Serial.println("I received a set pre-operational command.");
+            context->event_set_pre_operational();
+            break;
+        case 'o':
             Serial.println("I received a set operational command.");
             context->event_set_operational();
             break;

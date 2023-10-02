@@ -83,6 +83,11 @@ public:
         this->state_->on_event_reset();
     }
 
+    void event_set_pre_operational()
+    {
+        this->state_->on_event_set_pre_operational();
+    }
+
     void event_set_operational()
     {
         this->state_->on_event_set_operational();
