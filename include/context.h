@@ -33,10 +33,11 @@ public:
         m1(PIN_M1, PORT_M1),
         m2(PIN_M2, PORT_M2),
         button(PIN_BUTTON, PORT_BUTTON),
+        fault(PIN_FAULT, PORT_FAULT),
         sleep(PIN_SLEEP, PORT_SLEEP),
         led(PIN_LED, PORT_LED),
         encoder(c1, c2),
-        controller(m1, m2, button, sleep),
+        controller(m1, m2),
         tau(0),
         omega(0.0f),
         omegaRef(OMEGA_REF)
@@ -96,6 +97,7 @@ public:
     Analog_out m1;
     Analog_out m2;
     Digital_in button;
+    Digital_in fault;
     Digital_out sleep;
     Digital_out led;
     Encoder encoder;

@@ -1,11 +1,9 @@
 #include <p_controller.h>
 #include <Arduino.h>
 
-P_controller::P_controller(Analog_out &m1, Analog_out &m2, Digital_in& button, Digital_out& sleep) :
+P_controller::P_controller(Analog_out &m1, Analog_out &m2) :
     mM1(m1),
     mM2(m2),
-    mButton(button),
-    mSleep(sleep),
     mKp(0.0f),
     mOmegaMax(0.0f),
     duty(0.0f)
@@ -20,11 +18,6 @@ void P_controller::init(float omegaMax, float kp)
     // initialize all pins
     mM1.init(1, 1, 0.0f);
     mM2.init(2, 1, 0.0f);
-    mButton.init();
-    mSleep.init();
-
-    // set H-bridge to active
-    mSleep.set_hi();
 }
 
 float P_controller::update(float ref, float actual)
@@ -33,9 +26,6 @@ float P_controller::update(float ref, float actual)
     float error = ref - actual;
     float value = mKp * error;
     updateSpeed(value);
-
-    // check if emergency button is pressed
-    updateBrake();
 
     // return new speed value
     return value;
@@ -66,13 +56,5 @@ void P_controller::updateSpeed(float omega)
     {
         mM1.set_duty_cycle(0.0f);
         mM2.set_duty_cycle(-duty);
-    }
-}
-
-void P_controller::updateBrake()
-{
-    if (mButton.is_lo())
-    {
-        mSleep.set_lo();
     }
 }

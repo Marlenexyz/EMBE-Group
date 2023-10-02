@@ -2,6 +2,7 @@
 
 #include "context.h"
 #include "concrete_state_initialization.h"
+#include "concrete_state_stopped.h"
 #include <Arduino.h>
 
 void Concrete_state_operational::on_do()
@@ -14,6 +15,12 @@ void Concrete_state_operational::on_do()
     Serial.print(", duty: ");
     Serial.println(this->context_->controller.duty);
     this->context_->controller.update(this->context_->omegaRef, this->context_->omega);
+    
+    if (this->context_->button.is_lo() || this->context_->fault.is_lo())
+    {
+        this->context_->sleep.set_lo();
+        this->context_->transition_to(new Concrete_state_stopped);
+    }
 
     // if(this->context_->tau > 0)
     // {

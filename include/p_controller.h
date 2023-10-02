@@ -9,18 +9,15 @@
 class P_controller
 {
 public:
-    P_controller(Analog_out &m1, Analog_out &m2, Digital_in &button, Digital_out &sleep);
+    P_controller(Analog_out &m1, Analog_out &m2);
 
     void init(float omegaMax, float kp);
     float update(float ref, float actual);
     void updateSpeed(float omega);
-    void updateBrake();
 
 private:
     Analog_out mM1;
     Analog_out mM2;
-    Digital_in mButton;
-    Digital_out mSleep;
 
     float mKp;
     float mOmegaMax; // rad/s

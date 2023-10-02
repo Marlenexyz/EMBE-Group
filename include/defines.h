@@ -22,8 +22,11 @@
 #define PORT_BUTTON         'D'
 #define PIN_BUTTON          6
 
-#define PORT_SLEEP          'D'
-#define PIN_SLEEP           7
+#define PORT_FAULT          'D'
+#define PIN_FAULT           7
+
+#define PORT_SLEEP          'B'
+#define PIN_SLEEP           0
 
 #define PORT_LED            'B'
 #define PIN_LED             5
