@@ -1,4 +1,4 @@
-#include <P_controller.h>
+#include <p_controller.h>
 #include <Arduino.h>
 
 P_controller::P_controller(Analog_out &m1, Analog_out &m2) : mM1(m1),
@@ -14,8 +14,8 @@ void P_controller::init(float maxOmega, float kp)
     mKp = kp;
     sleep.set_hi();
 
-    mM1.init(2, 1, 0.0f);
-    mM2.init(1, 1, 0.0f);
+    mM1.init(1, 1, 0.0f);
+    mM2.init(2, 1, 0.0f);
     button.init();
     sleep.init();
 }

@@ -62,6 +62,28 @@ void Timer::init(int nr, int prescaler, long frequency)
             default: break;
         }
     }
+    else if(mNr == 2)
+    {
+        TCCR2A = 0;
+        TCCR2B = 0;
+        TCNT2 = 0;
+
+        set_frequency(frequency);
+        // Set CTC mode
+        TCCR2A |= (1 << WGM21);
+        // Enable interrupt
+        TIMSK2 |= (1 << OCIE2A);
+        // Set prescaler
+        switch(mPrescaler)
+        {
+            case 1: TCCR2B |= (1 << CS20); break;
+            case 8: TCCR2B |= (1 << CS21); break;
+            case 64: TCCR2B |= (1 << CS21) | (1 << CS20); break;
+            case 256: TCCR2B |= (1 << CS22); break;
+            case 1024: TCCR2B |= (1 << CS22) | (1 << CS20); break;
+            default: break;
+        }
+    }
 }
 
 void Timer::set_frequency(long frequency)
@@ -73,5 +95,9 @@ void Timer::set_frequency(long frequency)
     else if(mNr == 1)
     {
         OCR1A = cSYSTEM_FREQUENCY / frequency / mPrescaler - 1;
+    }
+    else if(mNr == 2)
+    {
+        OCR2A = cSYSTEM_FREQUENCY / frequency / mPrescaler - 1;
     }
 }

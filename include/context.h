@@ -4,7 +4,7 @@
 #include <digital_out.h>
 #include <analog_out.h>
 #include <encoder.h>
-#include <P_controller.h>
+#include <p_controller.h>
 
 #ifndef CONTEXT_H
 #define CONTEXT_H

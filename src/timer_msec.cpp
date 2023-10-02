@@ -38,18 +38,18 @@ void Timer_msec::init(int nr, int period_ms, float duty_cycle)
 {
     mNr = nr;
 
-    if(mNr == 2)
+    if(mNr == 0)
     {
-        TCCR2A = 0;
-        TCCR2B = 0;
-        TCNT2 = 0;
+        TCCR0A = 0;
+        TCCR0B = 0;
+        TCNT0 = 0;
 
-        OCR2A = 16000000 / 1024 * period_ms / 1000 - 1;
-        OCR2B = OCR2A * duty_cycle;
-        TCCR2A |= (1 << WGM21);
-        TIMSK2 |= (1 << OCIE2A);
-        TIMSK2 |= (1 << OCIE2B);
-        TCCR2B |= (1 << CS22) | (1 << CS20);
+        OCR0A = 16000000 / 1024 * period_ms / 1000 - 1;
+        OCR0B = OCR0A * duty_cycle;
+        TCCR0A |= (1 << WGM01);
+        TIMSK0 |= (1 << OCIE0A);
+        TIMSK0 |= (1 << OCIE0B);
+        TCCR0B |= (1 << CS02) | (1 << CS00);
     }
     else if(mNr == 1)
     {
@@ -63,6 +63,19 @@ void Timer_msec::init(int nr, int period_ms, float duty_cycle)
         TIMSK1 |= (1 << OCIE1A);
         TIMSK1 |= (1 << OCIE1B);
         TCCR1B |= (1 << CS12) | (1 << CS10);
+    }
+    else if(mNr == 2)
+    {
+        TCCR2A = 0;
+        TCCR2B = 0;
+        TCNT2 = 0;
+
+        OCR2A = 16000000 / 1024 * period_ms / 1000 - 1;
+        OCR2B = OCR2A * duty_cycle;
+        TCCR2A |= (1 << WGM21);
+        TIMSK2 |= (1 << OCIE2A);
+        TIMSK2 |= (1 << OCIE2B);
+        TCCR2B |= (1 << CS22) | (1 << CS20);
     }
 }
 

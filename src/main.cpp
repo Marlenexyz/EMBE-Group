@@ -47,22 +47,22 @@ ISR(INT0_vect)
     // context->tau = context->encoder.getTau();
 }
 
-ISR(TIMER2_COMPA_vect)
+ISR(TIMER1_COMPA_vect)
 {
     context->m1.pin.set_hi();
 }
 
-ISR(TIMER2_COMPB_vect)
+ISR(TIMER1_COMPB_vect)
 {
     context->m1.pin.set_lo();
 }
 
-ISR(TIMER1_COMPA_vect)
+ISR(TIMER2_COMPA_vect)
 {
     context->m2.pin.set_hi();
 }
 
-ISR(TIMER1_COMPB_vect)
+ISR(TIMER2_COMPB_vect)
 {
     context->m2.pin.set_lo();
 }
