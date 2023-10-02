@@ -12,6 +12,13 @@ void Concrete_state_operational::on_do()
     Serial.print(", w: ");
     Serial.print(this->context_->omega);
     this->context_->controller.update(this->context_->refOmega, this->context_->omega);
+
+    // if(tau > 0)
+    // {
+    //     Serial.print("Tau in µs: ");
+    //     Serial.println(tau);
+    //     delay(1000000);
+    // }
 }
 
 void Concrete_state_operational::on_entry()
