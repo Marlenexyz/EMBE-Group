@@ -15,8 +15,7 @@ void setup()
 
 void loop()
 {
-    
-    // wait for some time
+    // handle current state operations
     context->do_work();
 
     // send data only when you receive data:
@@ -28,16 +27,16 @@ void loop()
         // you can compare the value received to a character constant, like 'g'.
         switch (command)
         {
-            case 'r':
-                Serial.println("I received a reset command.");
-                context->event_reset();
-                break;
-            case 's':
-                Serial.println("I received a set operational command.");
-                context->event_set_operational();
-                break;
-            default:
-                break;
+        case 'r':
+            Serial.println("I received a reset command.");
+            context->event_reset();
+            break;
+        case 's':
+            Serial.println("I received a set operational command.");
+            context->event_set_operational();
+            break;
+        default:
+            break;
         }
     }
 }
@@ -45,11 +44,8 @@ void loop()
 ISR(INT0_vect)
 {
     context->omega = context->encoder.getSpeed();
-    // tau = encoder.getTau();
-    Serial.println("int0");
+    // context->tau = context->encoder.getTau();
 }
-
-
 
 ISR(TIMER2_COMPA_vect)
 {
