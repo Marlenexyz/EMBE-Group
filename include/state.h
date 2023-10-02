@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef STATE_H
 #define STATE_H
 
@@ -28,19 +30,11 @@ public:
 
   virtual void on_exit() = 0;
 
-  virtual void on_event_reset() = 0;
+  virtual void on_event_go() = 0;
 
-  virtual void on_event_set_operational() = 0;
+  virtual void on_event_stop() = 0;
 
-  virtual void on_isr_int0() = 0;
-
-  virtual void on_isr_timer1_compa() = 0;
-
-  virtual void on_isr_timer1_compb() = 0;
-  
-  virtual void on_isr_timer2_compa() = 0;
-
-  virtual void on_isr_timer2_compb() = 0;
+  virtual void on_event_timeout() = 0;
 
   // ...
 
