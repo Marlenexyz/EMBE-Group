@@ -1,0 +1,6 @@
+@startuml
+
+[*]-->Init: Power on
+Init--> Operational: auto
+Operational-->Init: reset
+@enduml

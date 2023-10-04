@@ -1,0 +1,37 @@
+@startuml Part_4
+!define STATEMACHINE
+!define INITIAL_STATE [*]
+
+
+[*] --> Initialization : Power On
+state Initialization #LightBlue : initialize internal Parameters
+Initialization --> bootup : Autonomous Transition
+bootup-->PreOperational: Autonomous Transisiton
+
+state bootup #Green: send message to user
+
+state PreOperational #yellow : LED blinks at 1 Hz
+PreOperational : user sets KPi and Ti
+
+PreOperational --> Operational : Set Operational Command
+PreOperational --> Initialization : Reset Command
+
+
+state Operational #lightgreen : LED continuously on
+Operational : normal input-output behavior
+
+Operational --> PreOperational : Set Pre-Operational Command
+Operational --> Initialization : Reset Command
+
+state Stopped #red : LED blinks at 2 Hz
+Stopped --> PreOperational : Clear Fault Command
+
+Operational-->Stopped : Fault detected
+
+
+
+
+
+STATEMACHINE
+
+@enduml
