@@ -28,6 +28,7 @@ private:
     float mOmegaMax; // rad/s
     float mKp;
     float mTi;
+    float mDuty;
 
 };
 

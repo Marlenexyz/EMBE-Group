@@ -8,7 +8,8 @@ PI_controller::PI_controller(Analog_out &m1, Analog_out &m2) :
     mM2(m2),
     mOmegaMax(0.0f),
     mKp(1.0f),
-    mTi(1.0f)
+    mTi(1.0f),
+    mDuty(0.0f)
 {
 
 }
@@ -36,10 +37,11 @@ float PI_controller::update(float ref, float actual)
 
     // calculate new speed value
     float errorNew = ref - actual;
-    error += errorNew;
+    if(mDuty < 1.0f)
+        error += errorNew;
     float value = mKp * (errorNew + 1 / mTi * error * static_cast<float>(UPDATE_RATE) / 1000.0f );
-    float duty = value / mOmegaMax;
-    updateSpeed(duty);
+    mDuty = value / mOmegaMax;
+    updateSpeed(mDuty);
 
     // print values
     Serial.print("w_ref: ");
@@ -47,12 +49,12 @@ float PI_controller::update(float ref, float actual)
     Serial.print(", w: ");
     Serial.print(actual);
     Serial.print(", duty: ");
-    if (duty > 1.0f)
+    if (mDuty > 1.0f)
         Serial.println(1.0f);
-    else if (duty < -1.0f)
+    else if (mDuty < -1.0f)
         Serial.println(-1.0f);
     else
-        Serial.println(duty);
+        Serial.println(mDuty);
 
     // return new speed value
     return value;
