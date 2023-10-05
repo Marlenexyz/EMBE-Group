@@ -23,6 +23,8 @@ void test_alternate_flow(void){
     TEST_ASSERT_EQUAL_INT(State::Name::PRE_OPERATIONAL, context->getState()->getStateName());
     context->event_set_operational();
     TEST_ASSERT_EQUAL_INT(State::Name::OPERATIONAL, context->getState()->getStateName()); 
+    // Wait until stop button is pressed
+    _delay_ms(5000);
     TEST_ASSERT_EQUAL_INT(State::Name::STOPPED, context->getState()->getStateName());
     context->event_set_operational();
     TEST_ASSERT_EQUAL_INT(State::Name::OPERATIONAL, context->getState()->getStateName());
