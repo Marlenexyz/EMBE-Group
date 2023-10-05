@@ -1,14 +1,17 @@
 #include <controller.h>
-#include <analog_out.h>
+#include <p_controller.h>
+#include <pi_controller.h>
 
-#ifndef P_CONTROLLER_H
-#define P_CONTROLLER_H
+#ifndef MOTOR_CONTROLLER_H
+#define MOTOR_CONTROLLER_H
 
-class P_controller :
+class Motor_controller :
     public Controller
 {
 public:
-    P_controller(Analog_out &m1, Analog_out &m2);
+    Motor_controller(Analog_out &m1, Analog_out &m2);
+
+    void setController(Controller::Type type);
 
     Controller::Type getType() override;
 
@@ -23,9 +26,14 @@ public:
 private:
     Analog_out mM1;
     Analog_out mM2;
+    P_controller mP_controller;
+    PI_controller mPI_controller;
+
+    Controller* mController;
 
     float mOmegaMax; // rad/s
     float mKp;
+    float mTi;
 
 };
 

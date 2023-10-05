@@ -1,18 +1,26 @@
 #include <p_controller.h>
+
 #include <Arduino.h>
 
 P_controller::P_controller(Analog_out &m1, Analog_out &m2) :
     mM1(m1),
     mM2(m2),
-    mKp(0.0f),
-    mOmegaMax(0.0f)
+    mOmegaMax(0.0f),
+    mKp(1.0f)
 {
+
 }
 
-void P_controller::init(float omegaMax, float kp)
+Controller::Type P_controller::getType()
 {
-    mOmegaMax = omegaMax;
-    mKp = kp;
+    return Controller::Type::P_CONTROLLER;
+}
+
+void P_controller::init(float omegaMax, float kp, float ti)
+{
+    setOmegaMax(omegaMax);
+    setKp(kp);
+    setTi(ti);
 
     // initialize all pins
     mM1.init(1, 1, 0.0f);
@@ -70,7 +78,17 @@ void P_controller::updateSpeed(float duty)
     }
 }
 
+void P_controller::setOmegaMax(float omegaMax)
+{
+    mOmegaMax = omegaMax;
+}
+
 void P_controller::setKp(float kp)
 {
     mKp = kp;
+}
+
+void P_controller::setTi(float ti)
+{
+    // no Ti required for P_controller
 }
