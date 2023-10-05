@@ -24,6 +24,7 @@ void Concrete_state_stopped::on_exit()
 
 void Concrete_state_stopped::on_event_reset()
 {
+    this->context_->controller.reset();
     this->context_->transition_to(new Concrete_state_initialization);
 }
 

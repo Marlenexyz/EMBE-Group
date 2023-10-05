@@ -5,6 +5,7 @@ Motor_controller::Motor_controller(Analog_out &m1, Analog_out &m2) :
     mM2(m2),
     mP_controller(m1, m2),
     mPI_controller(m1, m2),
+    mController(nullptr),
     mOmegaMax(0.0f),
     mKp(1.0f),
     mTi(1.0f)
@@ -30,10 +31,16 @@ Controller::Type Motor_controller::getType()
         return Controller::Type::UNKNOWN;
 }
 
-void Motor_controller::init(float omegaMax, float kp, float ti)
+void Motor_controller::init(float omegaMax)
 {
     if(mController != nullptr)
-        mController->init(omegaMax, kp, ti);
+        mController->init(omegaMax);
+}
+
+void Motor_controller::reset()
+{
+    if(mController != nullptr)
+        mController->reset();
 }
 
 float Motor_controller::update(float ref, float actual)

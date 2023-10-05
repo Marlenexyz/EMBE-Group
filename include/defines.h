@@ -38,10 +38,10 @@
 #define OMEGA_MAX           12.48f
 #define OMEGA_REF           8.0f
 
-#define P_CTRL_KP           20.0f  // 7.0f for w_ref = 8
+// #define P_CTRL_KP           20.0f  // 7.0f for w_ref = 8
 
-#define PI_CTRL_KP          0.0f
-#define PI_CTRL_TI          0.0f
+// #define PI_CTRL_KP          0.0f
+// #define PI_CTRL_TI          0.0f
 
 
 

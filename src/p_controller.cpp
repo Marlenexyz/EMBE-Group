@@ -16,13 +16,14 @@ Controller::Type P_controller::getType()
     return Controller::Type::P_CONTROLLER;
 }
 
-void P_controller::init(float omegaMax, float kp, float ti)
+void P_controller::init(float omegaMax)
 {
     setOmegaMax(omegaMax);
-    setKp(kp);
-    setTi(ti);
+    reset();
+}
 
-    // initialize all pins
+void P_controller::reset()
+{
     mM1.init(1, 1, 0.0f);
     mM2.init(2, 1, 0.0f);
 }

@@ -5,7 +5,7 @@
 #include <digital_out.h>
 #include <analog_out.h>
 #include <encoder.h>
-#include <p_controller.h>
+#include <motor_controller.h>
 
 #ifndef CONTEXT_H
 #define CONTEXT_H
@@ -106,7 +106,7 @@ public:
     Digital_out sleep;
     Digital_out led;
     Encoder encoder;
-    P_controller controller;
+    Motor_controller controller;
 
     unsigned long tau;
     float omega;

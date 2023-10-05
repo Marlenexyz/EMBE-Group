@@ -18,13 +18,14 @@ Controller::Type PI_controller::getType()
     return Controller::Type::PI_CONTROLLER;
 }
 
-void PI_controller::init(float omegaMax, float kp, float ti)
+void PI_controller::init(float omegaMax)
 {
     setOmegaMax(omegaMax);
-    setKp(kp);
-    setTi(ti);
+    reset();
+}
 
-    // initialize all pins
+void PI_controller::reset()
+{
     mM1.init(1, 1, 0.0f);
     mM2.init(2, 1, 0.0f);
 }

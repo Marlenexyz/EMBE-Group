@@ -12,7 +12,8 @@ public:
 
     Controller::Type getType() override;
 
-    void init(float omegaMax, float kp, float ti) override;
+    void init(float omegaMax) override;
+    void reset() override;
     float update(float ref, float actual) override;
     void updateSpeed(float duty) override;
 

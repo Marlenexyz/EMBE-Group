@@ -19,7 +19,6 @@ void Concrete_state_initialization::on_entry()
     this->context_->sleep.init();
     this->context_->led.init();
     this->context_->encoder.init(OMEGA_MAX);
-    this->context_->controller.init(OMEGA_MAX, P_CTRL_KP, 1.0f);
 
     // set H-bridge to active state
     this->context_->sleep.set_hi();

@@ -13,7 +13,8 @@ public:
 
     virtual Controller::Type getType() = 0;
 
-    virtual void init(float omegaMax, float kp, float ti) = 0;
+    virtual void init(float omegaMax) = 0;
+    virtual void reset() = 0;
     virtual float update(float ref, float actual) = 0;
     virtual void updateSpeed(float duty) = 0;
 
