@@ -4,6 +4,11 @@
 #include "concrete_state_pre_operational.h"
 #include <Arduino.h>
 
+State::Name Concrete_state_initialization::getStateName()
+{
+    return State::Name::INITIALIZATION;
+}
+
 void Concrete_state_initialization::on_do()
 {
 

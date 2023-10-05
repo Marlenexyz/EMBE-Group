@@ -6,6 +6,11 @@
 #include "concrete_state_operational.h"
 #include <Arduino.h>
 
+State::Name Concrete_state_stopped::getStateName()
+{
+    return State::Name::STOPPED;
+}
+
 void Concrete_state_stopped::on_do()
 {
     delay(1000); // blinking at 2 Hz

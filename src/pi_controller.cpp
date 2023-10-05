@@ -37,6 +37,8 @@ float PI_controller::update(float ref, float actual)
 
     // calculate new speed value
     float errorNew = ref - actual;
+
+    // prevent integral windup
     if(mDuty < 1.0f)
         error += errorNew;
     float value = mKp * (errorNew + 1 / mTi * error * static_cast<float>(UPDATE_RATE) / 1000.0f );

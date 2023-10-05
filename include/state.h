@@ -20,6 +20,15 @@ protected:
     Context *context_;
 
 public:
+    enum class Name : int
+    {
+        UNKNOWN,
+        INITIALIZATION,
+        PRE_OPERATIONAL,
+        OPERATIONAL,
+        STOPPED
+    };
+
     virtual ~State()
     {
     }
@@ -28,6 +37,8 @@ public:
     {
         this->context_ = context;
     }
+
+    virtual State::Name getStateName() = 0;
 
     virtual void on_do() = 0;
 

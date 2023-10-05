@@ -12,6 +12,7 @@ class Concrete_state_stopped : public State
 {
 public:
 
+    State::Name getStateName() override;
     void on_do() override;
     void on_entry() override;
     void on_exit() override;

@@ -6,6 +6,11 @@
 #include "concrete_state_stopped.h"
 #include <Arduino.h>
 
+State::Name Concrete_state_operational::getStateName()
+{
+    return State::Name::OPERATIONAL;
+}
+
 void Concrete_state_operational::on_do()
 {
     delay(UPDATE_RATE);

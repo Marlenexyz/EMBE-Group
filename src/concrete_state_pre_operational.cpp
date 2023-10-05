@@ -5,6 +5,11 @@
 #include "concrete_state_operational.h"
 #include <Arduino.h>
 
+State::Name Concrete_state_pre_operational::getStateName()
+{
+    return State::Name::PRE_OPERATIONAL;
+}
+
 void Concrete_state_pre_operational::on_do()
 {
     delay(500); // blinking at 1 Hz
