@@ -51,6 +51,15 @@ public:
     }
 
     /**
+     * Return the current state. 
+     */
+    
+    State* getState()
+    {
+        return state_;
+    }
+
+    /**
      * The Context allows changing the State object at runtime.
      */
 
