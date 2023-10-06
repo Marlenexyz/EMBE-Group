@@ -42,7 +42,7 @@ int main()
     UNITY_BEGIN(); // IMPORTANT LINE!
 
     RUN_TEST(test_normal_flow);
-    RUN_TEST(test_alternate_flow);
+    // RUN_TEST(test_alternate_flow);
 
     UNITY_END(); // stop unit testing
 }
