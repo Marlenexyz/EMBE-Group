@@ -1,0 +1,1 @@
+cmd_/home/leona/projects/embe_prj_4/kernel_modules/gpio_test_part2.mod := printf '%s\n'   gpio_test_part2.o | awk '!x[$$0]++ { print("/home/leona/projects/embe_prj_4/kernel_modules/"$$0) }' > /home/leona/projects/embe_prj_4/kernel_modules/gpio_test_part2.mod
