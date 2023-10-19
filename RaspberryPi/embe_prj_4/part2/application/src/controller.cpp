@@ -1,8 +1,8 @@
 #include "controller.h"
 
 Controller::Controller(double rpsMax, double kp) :
-    mRpsMax(),
-    mKp()
+    mRpsMax(rpsMax),
+    mKp(kp)
 {
 
 }
@@ -18,6 +18,11 @@ double Controller::update(double ref, double act)
     double error = ref - act;
     double value = mKp * error;
     double duty = value / mRpsMax;
+
+    if (duty > 1.0)
+        duty = 1.0;
+    else if (duty < -1.0)
+        duty = -1.0;
 
     return duty;
 }
