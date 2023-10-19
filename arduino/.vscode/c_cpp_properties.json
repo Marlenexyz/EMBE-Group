@@ -8,11 +8,11 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/include",
-                "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/src",
+                "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/arduino/include",
+                "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/arduino/src",
                 "C:/Users/leona/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "C:/Users/leona/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
-                "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/.pio/libdeps/nanoatmega328/Unity/src",
+                "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/arduino/.pio/libdeps/nanoatmega328/Unity/src",
                 "C:/Users/leona/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "C:/Users/leona/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "C:/Users/leona/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
@@ -23,11 +23,11 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/include",
-                    "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/src",
+                    "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/arduino/include",
+                    "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/arduino/src",
                     "C:/Users/leona/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "C:/Users/leona/.platformio/packages/framework-arduino-avr/variants/eightanaloginputs",
-                    "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/.pio/libdeps/nanoatmega328/Unity/src",
+                    "c:/Users/leona/OneDrive - student.kit.edu/Dokumente/GitHub/EMBE-Group/arduino/.pio/libdeps/nanoatmega328/Unity/src",
                     "C:/Users/leona/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "C:/Users/leona/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                     "C:/Users/leona/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
