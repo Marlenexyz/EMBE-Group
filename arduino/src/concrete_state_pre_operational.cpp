@@ -22,66 +22,78 @@ void Concrete_state_pre_operational::on_entry()
     Serial.println("Bootup... ready to receive commands...");
 
     // Set controller
-    char ctrl = 0;
-    do
-    {
-        Serial.println("Set controller ('p' for P or 'i' for PI): ");
-        while (!(Serial.available() >= 1));
-        ctrl = Serial.read();
-    } while (ctrl != 'p' && ctrl != 'i');
-    Serial.print("   ...Controller set to ");
-    switch(ctrl)
-    {
-        case 'p':
-            this->context_->controller.setController(Controller::Type::P_CONTROLLER);
-            Serial.print("P");
-            break;
-        case 'i':
-            this->context_->controller.setController(Controller::Type::PI_CONTROLLER);
-            Serial.print("PI");
-            break;
-        default:
-            break;
-    }
-    Serial.println(".");
+    // char ctrl = 0;
+    // do
+    // {
+    //     Serial.println("Set controller ('p' for P or 'i' for PI): ");
+    //     while (!(Serial.available() >= 1));
+    //     ctrl = Serial.read();
+    // } while (ctrl != 'p' && ctrl != 'i');
+    // Serial.print("   ...Controller set to ");
+    // switch(ctrl)
+    // {
+    //     case 'p':
+    //         this->context_->controller.setController(Controller::Type::P_CONTROLLER);
+    //         Serial.print("P");
+    //         break;
+    //     case 'i':
+    //         this->context_->controller.setController(Controller::Type::PI_CONTROLLER);
+    //         Serial.print("PI");
+    //         break;
+    //     default:
+    //         break;
+    // }
+    // Serial.println(".");
+
+    //For TDD set controller Pi
+    this->context_->controller.setController(Controller::Type::PI_CONTROLLER);
 
     // Initialize controller
     this->context_->controller.init(OMEGA_MAX);
 
-    // Set Kp value
-    byte kp[4] = {0};
-    float value = 0.0f;
-    do
-    {
-        Serial.println("Set Kp value as decimal (4 chars available): ");
-        while (!(Serial.available() >= 4));
-        Serial.readBytes(kp, 4);
-        value = atof(reinterpret_cast<char*>(kp));
-    } while (value == 0.0f);
+    // // Set Kp value
+    // byte kp[4] = {0};
+    // float value = 0.0f;
+    // do
+    // {
+    //     Serial.println("Set Kp value as decimal (4 chars available): ");
+    //     while (!(Serial.available() >= 4));
+    //     Serial.readBytes(kp, 4);
+    //     value = atof(reinterpret_cast<char*>(kp));
+    // } while (value == 0.0f);
+    // this->context_->controller.setKp(value);
+    // Serial.print("   ...Kp value set to ");
+    // Serial.print(value);
+    // Serial.println(".");
+
+    //Set Kp value for TDD
+    float value = 6.5;
     this->context_->controller.setKp(value);
-    Serial.print("   ...Kp value set to ");
-    Serial.print(value);
-    Serial.println(".");
 
-    if(this->context_->controller.getType() == Controller::Type::PI_CONTROLLER)
-    {
-        // Set Ti value
-        byte ti[4] = {0};
-        value = 0.0f;
-        do
-        {
-            Serial.println("Set Ti value in ms (4 chars available): ");
-            while (!(Serial.available() >= 4));
-            Serial.readBytes(ti, 4);
-            value = atof(reinterpret_cast<char*>(ti));
-        } while (value == 0.0f);
-        this->context_->controller.setTi(value / 1000.0f);
-        Serial.print("   ...Ti value set to ");
-        Serial.print(value);
-        Serial.println(".");
-    }
+    // if(this->context_->controller.getType() == Controller::Type::PI_CONTROLLER)
+    // {
+    //     // Set Ti value
+    //     byte ti[4] = {0};
+    //     value = 0.0f;
+    //     do
+    //     {
+    //         Serial.println("Set Ti value in ms (4 chars available): ");
+    //         while (!(Serial.available() >= 4));
+    //         Serial.readBytes(ti, 4);
+    //         value = atof(reinterpret_cast<char*>(ti));
+    //     } while (value == 0.0f);
+    //     this->context_->controller.setTi(value / 1000.0f);
+    //     Serial.print("   ...Ti value set to ");
+    //     Serial.print(value);
+    //     Serial.println(".");
+    // }
 
-    Serial.println("Presets finished...");
+    // Serial.println("Presets finished...");
+
+    //set value for Ti for TDD
+    value = 20;
+    this->context_->controller.setTi(value / 1000.0f);
+
 }
 
 void Concrete_state_pre_operational::on_exit()

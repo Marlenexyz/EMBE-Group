@@ -1,0 +1,1 @@
+cmd_/home/leona/projects/embe_prj_4/kernel_modules/Module.symvers :=  sed 's/ko$$/o/'  /home/leona/projects/embe_prj_4/kernel_modules/modules.order | scripts/mod/modpost -m -a    -o /home/leona/projects/embe_prj_4/kernel_modules/Module.symvers -e -i Module.symvers -T - 

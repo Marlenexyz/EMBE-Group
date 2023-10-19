@@ -1,13 +1,13 @@
 @startuml Part_2
 
-state init #LightBlue
+state Initialization #LightBlue
 state Operational #lightGreen
-[*]-->init: Power on
-init--> Operational: auto
-Operational-->init: reset
+[*]-->Initialization: Power on
+Initialization--> Operational: auto
+Operational-->Initialization: reset
 
 state Stopped #red 
-Operational-->Stopped : Fault detected
-Operational-->Stopped :emergency Button pressed 
-
+Operational-->Stopped : Fault detected or Button pushed
+Stopped-->Initialization: reset
+Stopped--> Operational: Command
 @enduml

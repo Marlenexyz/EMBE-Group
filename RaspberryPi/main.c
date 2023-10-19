@@ -48,9 +48,10 @@ int main()
         //     printf("Timeout\n");
         // else
             
-            fd_out = open("/sys/class/gpio/gpio22/value", O_WRONLY);
-            write(fd_out, &c, 1);
-            close(fd_out);
+        fd_out = open("/sys/class/gpio/gpio22/value", O_WRONLY);
+        write(fd_out, &c, 1);
+        close(fd_out);
+        
     }
 
     //Disable gpio17
