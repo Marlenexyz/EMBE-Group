@@ -1,18 +1,18 @@
-#include "controller.h"
+#include "p_controller.h"
 
-Controller::Controller(double rpsMax, double kp) :
+P_Controller::P_Controller(double rpsMax, double kp) :
     mRpsMax(rpsMax),
     mKp(kp)
 {
 
 }
 
-Controller::~Controller()
+P_Controller::~P_Controller()
 {
 
 }
 
-double Controller::update(double ref, double act)
+double P_Controller::update(double ref, double act)
 {
     // calculate new speed value
     double error = ref - act;
