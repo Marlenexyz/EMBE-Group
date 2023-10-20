@@ -1,4 +1,4 @@
-OBJS = main.o controller.o
+OBJS = main.o p_controller.o pi_controller.o
 
 # This is the default target, which will be built when you invoke make
 all: main install clean
