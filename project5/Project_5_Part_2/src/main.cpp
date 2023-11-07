@@ -40,4 +40,23 @@ void loop() {
 
 
 
-
+ 
+// Funktion zum Konvertieren von Hexadezimal-String in Ganzzahl
+uint32_t ModbusClient::parseHex(const char* str, size_t length) {
+        uint32_t result = 0;
+        for (size_t i = 0; i < length; i++) {
+            result <<= 4;
+            char c = str[i];
+            if (c >= '0' && c <= '9') {
+                result += c - '0';
+            } else if (c >= 'A' && c <= 'F') {
+                result += c - 'A' + 10;
+            } else if (c >= 'a' && c <= 'f') {
+                result += c - 'a' + 10;
+            } else {
+                // Unerwartetes Zeichen
+                return 0;
+            }
+        }
+        return result;
+    }
