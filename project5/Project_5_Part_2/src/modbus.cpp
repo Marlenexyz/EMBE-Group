@@ -51,13 +51,12 @@ void modbus::write(uint32_t regi_,uint32_t value_){
         send(value_);
 }
 
-void modbus::send(uint32_t value_){
+void modbus::send(uint32_t valuess){
 
     Serial.print(server_);
     Serial.print(function_);
     Serial.print(regi_);
-    Serial.print(numreg_);
-    Serial.print(value_);
+    Serial.print(valuess);
     Serial.print(crc_);
 }
 
