@@ -8,32 +8,61 @@ modbus::modbus(int server) {
 
 }
 
-int modbus::read(char message[],int len) {
+void modbus::recieve(char message[],int len) {
 
-        server_ = parseHex(message, 2);
-        function_ = parseHex(message + 2, 2);
+    server_ = parseHex(message, 2);
+    function_ = parseHex(message + 2, 2);
+    crc_ = parseHex(message + 12, 4);
+    regi_ = parseHex(message + 4, 4);
+    numreg_ = parseHex(message + 8, 4);
+    // crc check
+    uint8_t buffer[6]={server_,function_,regi_>>8,regi_,numreg_>>8,numreg_};
+
+
+    if(ModRTU_CRC(buffer,6)==crc_){
+
+        if (function_==3){
         regi_ = parseHex(message + 4, 4);
         numreg_ = parseHex(message + 8, 4);
-        crc_ = parseHex(message + 12, 2);
-        Serial.print("Server: ");
-        Serial.println(server_);
-        Serial.print("function: ");
-        Serial.println(function_);
-        Serial.print("register: ");
-        Serial.println(regi_);
-        Serial.print("numreg: ");
-        Serial.println(numreg_);
-        Serial.print("CRC: ");
-        Serial.println(crc_);
-
-    return server_; 
+        read(regi_,numreg_);
+        }
+        else if(function_==6){
+        regi_ = parseHex(message + 4, 4);
+        value_= parseHex(message + 8, 4);
+        write(regi_,value_);
+        }
+    }
+    else { 
+        Serial.println("Das war wohl nichts du Hurensohn");
+    }
 }
 
-void modbus::write(char message[],int len){
-
+void modbus::read(uint32_t regi_,uint32_t numreg_){
+    for (uint32_t i = 0; i < numreg_; i++)
+    {
+        value_=serverregister[regi_+i];
+        send(value_);
+    }
+    
 
 }
-uint16_t ModRTU_CRC(uint8_t buf[], int len)
+void modbus::write(uint32_t regi_,uint32_t value_){
+        serverregister[regi_]=value_;
+        send(value_);
+}
+
+void modbus::send(uint32_t value_){
+
+    Serial.print(server_);
+    Serial.print(function_);
+    Serial.print(regi_);
+    Serial.print(numreg_);
+    Serial.print(value_);
+    Serial.print(crc_);
+}
+
+
+uint16_t modbus::ModRTU_CRC(uint8_t buf[], int len)
 {
 uint16_t crc = 0xFFFF;
 for (int pos = 0; pos < len; pos++) {

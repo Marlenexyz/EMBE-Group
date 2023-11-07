@@ -16,40 +16,22 @@ void loop() {
   while(count<20){
     
     while (Serial.available() > 0) {
-        char receivedChar = Serial.read();
+        char receivedChar = Serial.read(); //readbytes
         message[count] = receivedChar;
-        //Serial.print(message[count]);
-        //Serial.print("Counter Value: ");
-        //Serial.println(count);
         count=count+1; 
         }
 
   if (Serial.available()==0){
-    if (shit&&count >= 1 && count <= 13)
-    {
-      Serial.print("Transport error, message too short");
-      shit=false;
+    // if (count >= 1 && count <= 13&&shit)
+    // {
+    //   Serial.print("Transport error, message too short");
+    //   shit=false;
       
-    }
+    // }
     
-    if(shit && count>=14){
-        versuch.read(message,strlen(message));
-        //int bla = versuch.read(message,strlen(message));
-        //Serial.print("in read kam raus: "+bla);
+    if(shit && count>=16){
+        versuch.recieve(message,strlen(message));
         shit=false;                  
-    
-      if (message[3]==3)
-        {
-          Serial.println("In der read if");
-          int bla = versuch.read(message,strlen(message));
-          Serial.print("in read kam raus: "+bla);
-
-        }
-        else if (message[2]=='0' && message[3]=='6')
-        {
-          versuch.write(message,strlen(message));
-        }
-
     }
     }
   }

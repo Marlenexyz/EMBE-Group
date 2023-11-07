@@ -9,10 +9,14 @@ public:
     modbus(int variable);
 
     // Function to read data.
-    int read(char message[],int len);
+    void recieve(char message[],int len);
+
+    void read(uint32_t regi_,uint32_t numreg_);
 
     // Function to write data.
-    void write(char message[],int len);
+    void write(uint32_t regi_,uint32_t value_);
+
+    void send(uint32_t value_);
 
     uint16_t ModRTU_CRC(uint8_t buf[], int len);
 
