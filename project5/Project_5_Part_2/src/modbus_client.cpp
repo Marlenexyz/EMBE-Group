@@ -36,34 +36,30 @@ void ModbusClient::read(uint16_t reg, uint16_t* data)
     uint8_t receiveMsg[7] = {0};
     if(receive(receiveMsg, sizeof(receiveMsg)) < 0)
     {
-        Serial.println("No message received!");
+        // Serial.println("No message received!");
         return;
     }
-    Serial.print("Received message: ");
-    printMsg(receiveMsg, sizeof(receiveMsg));
 
     uint16_t recCrc = (receiveMsg[5] << 8) | receiveMsg[6];
-    Serial.println(recCrc);
     uint16_t calcCrc = ModRTU_CRC(receiveMsg, sizeof(receiveMsg) - 2);
-    Serial.println(calcCrc);
     if(recCrc != calcCrc)
     {
-        Serial.println("CRC check failure!");
+        // Serial.println("CRC check failure!");
         return;
     }
     if(receiveMsg[0] != sendMsg[0]
     || receiveMsg[1] != sendMsg[1]
     || receiveMsg[2] != 0x02)
     {
-        Serial.println("Received message invalid!");
+        // Serial.println("Received message invalid!");
         return;
     }
 
     // read data
     *data = (receiveMsg[3] << 8) | receiveMsg[4];
 
-    Serial.print("Received data: ");
-    Serial.println(*data);
+    // Serial.print("Received data: ");
+    // Serial.println(*data);
 }
 
 void ModbusClient::write(uint16_t reg, uint16_t data)
@@ -85,7 +81,7 @@ void ModbusClient::write(uint16_t reg, uint16_t data)
     uint8_t receiveMsg[8] = {0};
     if(receive(receiveMsg, sizeof(receiveMsg)) < 0)
     {
-        Serial.println("No message received!");
+        // Serial.println("No message received!");
         return;
     }
 
@@ -93,7 +89,7 @@ void ModbusClient::write(uint16_t reg, uint16_t data)
     {
         if(receiveMsg[i] != sendMsg[i])
         {
-            Serial.println("Received message invalid!");
+            // Serial.println("Received message invalid!");
             return;
         }
     }
@@ -150,5 +146,5 @@ void ModbusClient::printMsg(uint8_t* msg, uint8_t len)
     {
         sprintf(&buffer[i*2], "%02X", msg[i]);
     }
-    Serial.println(buffer);
+    // Serial.println(buffer);
 }

@@ -38,8 +38,6 @@ void ModbusServer::init(uint8_t serverNr, uint32_t baudrate)
     tcsetattr(mFile, TCSANOW, &options);
     
     closeUart();
-
-    mServerRegister[5] = 0x000F;
 }
 
 void ModbusServer::openUart()
@@ -94,14 +92,14 @@ void ModbusServer::handleRequest()
         sendMsg[0] = receiveMsg[0];
         sendMsg[1] = receiveMsg[1];
         sendMsg[2] = 0x02;
-        sendMsg[3] = (uint8_t)(data << 8);
+        sendMsg[3] = (uint8_t)(data >> 8);
         sendMsg[4] = (uint8_t)data;
 
         uint16_t crc = ModRTU_CRC(sendMsg, sizeof(sendMsg) - 2);
-        sendMsg[5] = (uint8_t)(crc << 8);
+        sendMsg[5] = (uint8_t)(crc >> 8);
         sendMsg[6] = (uint8_t)crc;
 
-        printf("reg: %d, data: %d\n", reg, data);
+        // printf("reg: %d, data: %d\n", reg, data);
         send(sendMsg, sizeof(sendMsg));
 
         printf("Sent message: ");
@@ -115,7 +113,7 @@ void ModbusServer::handleRequest()
         uint16_t data = (receiveMsg[4] << 8) | receiveMsg[5];
         mServerRegister[reg] = data;
 
-        printf("reg: %d, data: %d\n", reg, data);
+        // printf("reg: %d, data: %d\n", reg, data);
         send(receiveMsg, sizeof(receiveMsg));
 
         printf("Sent message: ");
