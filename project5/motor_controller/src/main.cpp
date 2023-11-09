@@ -3,14 +3,19 @@
 #include <context.h>
 #include <concrete_state_initialization.h>
 #include <concrete_state_operational.h>
+#include <modbus_server.h>
 
 Context *context;
 uint8_t message[8] = {0};
+
+ModbusServer modbus;
 
 void setup()
 {
     Serial.begin(115200);
     context = new Context(new Concrete_state_initialization);
+
+    modbus.init(0x02, 9600);
 }
 
 void loop()
@@ -18,39 +23,33 @@ void loop()
     // handle current state operations
     context->do_work();
 
-    // send data only when you receive data:
-    if (Serial.available() > 0)
+    // handle server requests
+    modbus.handleRequest();
+
+    uint16_t command = 0;
+    modbus.getReg(0x0000, &command);
+
+    // you can compare the value received to a character constant, like 'r'.
+    switch (command)
     {
-        // read the incoming byte:
-		Serial.readBytes(message, 8);
-        // debug print
-		Serial.println((char*)message);
-
-        int command = 0;
-        // modbus receive
-        /*
-        modbus.receive();
-        command = modbus.readRegister();
-        */
-
-        // you can compare the value received to a character constant, like 'r'.
-        switch (command)
-        {
-        case 'r':
-            Serial.println("I received a reset command.");
-            context->event_reset();
-            break;
-        case 'p':
-            Serial.println("I received a set pre-operational command.");
-            context->event_set_pre_operational();
-            break;
-        case 'o':
-            Serial.println("I received a set operational command.");
-            context->event_set_operational();
-            break;
-        default:
-            break;
-        }
+    case 0x0001:
+        // Serial.println("I received a set operational command.");
+        context->event_set_operational();
+        break;
+    case 0x0002:
+        // Serial.println("I received a set operational command.");
+        context->event_set_stopped();
+        break;
+    case 0x0080:
+        // Serial.println("I received a set pre-operational command.");
+        context->event_set_pre_operational();
+        break;
+    case 0x0081:
+        // Serial.println("I received a reset command.");
+        context->event_reset();
+        break;
+    default:
+        break;
     }
 }
 

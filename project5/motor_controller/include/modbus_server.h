@@ -15,6 +15,8 @@ public:
 
     // set a register value from outside
     void setReg(uint16_t reg, uint16_t data);
+    // read a register value from outside
+    void getReg(uint16_t reg, uint16_t* data);
 
     // handle requests from clients
     void handleRequest();

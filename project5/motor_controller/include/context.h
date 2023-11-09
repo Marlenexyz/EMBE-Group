@@ -102,6 +102,11 @@ public:
         this->state_->on_event_set_operational();
     }
 
+    void event_set_stopped()
+    {
+        this->state_->on_event_set_stopped();
+    }
+
     /**
      * The Context holds globaly used objects and variables.
      */

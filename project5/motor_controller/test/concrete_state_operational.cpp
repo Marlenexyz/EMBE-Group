@@ -24,15 +24,15 @@ void Concrete_state_operational::on_do()
 
     // if(this->context_->tau > 0)
     // {
-    //     Serial.print("Tau in µs: ");
-    //     Serial.println(this->context_->tau);
+    //     // Serial.print("Tau in µs: ");
+    //     // Serial.println(this->context_->tau);
     //     delay(1000000);
     // }
 }
 
 void Concrete_state_operational::on_entry()
 {
-    Serial.println("Transitioned to Operational state.");
+    // Serial.println("Transitioned to Operational state.");
     this->context_->led.set_hi();
 }
 

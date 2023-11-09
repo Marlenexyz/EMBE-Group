@@ -19,6 +19,7 @@ public:
     void on_event_reset() override;
     void on_event_set_pre_operational() override;
     void on_event_set_operational() override;
+    void on_event_set_stopped() override;
     
 };
 
