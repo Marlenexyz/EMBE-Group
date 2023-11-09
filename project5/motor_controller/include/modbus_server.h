@@ -13,6 +13,9 @@ public:
     // initialize client
     void init(uint8_t serverNr, uint32_t baudrate);
 
+    // set a register value from outside
+    void setReg(uint16_t reg, uint16_t data);
+
     // handle requests from clients
     void handleRequest();
 

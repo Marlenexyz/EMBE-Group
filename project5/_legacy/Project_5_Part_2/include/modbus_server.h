@@ -13,10 +13,8 @@ public:
     // initialize client
     void init(uint8_t serverNr, uint32_t baudrate);
 
-    // open UART
-    void openUart();
-    // close UART
-    void closeUart();
+    // set a register value from outside
+    void setReg(uint16_t reg, uint16_t data);
 
     // handle requests from clients
     void handleRequest();
@@ -36,8 +34,6 @@ private:
     // server number
     uint8_t mServerNr = 0;
     uint16_t mServerRegister[64] = {0};
-
-    int32_t mFile = 0;
 };
 
 #endif // ModbusServer_H

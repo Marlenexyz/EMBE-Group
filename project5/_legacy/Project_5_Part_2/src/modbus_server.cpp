@@ -17,28 +17,33 @@ void ModbusServer::init(uint8_t serverNr, uint32_t baudrate)
     Serial.begin(baudrate);
 }
 
+void ModbusServer::setReg(uint16_t reg, uint16_t data)
+{
+    mServerRegister[reg] = data;
+}
+
 void ModbusServer::handleRequest()
 {
     uint8_t receiveMsg[8] = {0};
     if(receive(receiveMsg, sizeof(receiveMsg)) < 0)
     {
-        // Serial.print("No message received!\n");
+        // Serial.println("No message received!");
         return;
     }
 
     // Serial.print("Received message: ");
-    // printMsg(receiveMsg, sizeof(receiveMsg));
+    printMsg(receiveMsg, sizeof(receiveMsg));
     
     uint16_t recCrc = (receiveMsg[6] << 8) | receiveMsg[7];
     uint16_t calcCrc = ModRTU_CRC(receiveMsg, sizeof(receiveMsg) - 2);
     if(recCrc != calcCrc)
     {
-        // Serial.print("CRC check failure!\n");
+        // Serial.println("CRC check failure!");
         return;
     }
     if(receiveMsg[0] != mServerNr)
     {
-        // Serial.print("Received message invalid!\n");
+        // Serial.println("Received message invalid!");
         return;
     }
 
@@ -63,8 +68,8 @@ void ModbusServer::handleRequest()
 
         send(sendMsg, sizeof(sendMsg));
 
-        // // Serial.print("Sent message: ");
-        // printMsg(sendMsg, sizeof(sendMsg));
+        // Serial.print("Sent message: ");
+        printMsg(sendMsg, sizeof(sendMsg));
     }
     else if(receiveMsg[1] == 0x06)
     {
@@ -75,8 +80,8 @@ void ModbusServer::handleRequest()
 
         send(receiveMsg, sizeof(receiveMsg));
 
-        // // Serial.print("Sent message: ");
-        // printMsg(receiveMsg, sizeof(receiveMsg));
+        // Serial.print("Sent message: ");
+        printMsg(receiveMsg, sizeof(receiveMsg));
     }
 }
 
@@ -129,7 +134,7 @@ void ModbusServer::printMsg(uint8_t* msg, uint8_t len)
     char buffer[64] = {0};
     for(uint8_t i; i < len; i++)
     {
-        sprintf(&buffer[i*2], "%02X", msg[i]);
+        sprintf(&buffer[i * 2], "%02X", msg[i]);
     }
-    // // Serial.println(buffer);
+    // Serial.println(buffer);
 }

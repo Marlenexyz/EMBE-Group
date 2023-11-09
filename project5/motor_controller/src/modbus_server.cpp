@@ -1,8 +1,5 @@
 #include "modbus_server.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <termios.h>
+#include <Arduino.h>
 
 ModbusServer::ModbusServer()
 {
@@ -17,41 +14,12 @@ ModbusServer::~ModbusServer()
 void ModbusServer::init(uint8_t serverNr, uint32_t baudrate)
 {
     mServerNr = serverNr;
-
-    openUart();
-
-    struct termios options;
-
-    tcgetattr(mFile, &options);
-    cfmakeraw(&options);
-    // set baudrate
-    if(baudrate == 9600)
-        options.c_cflag = B9600 | CS8 | CREAD | CLOCAL;
-    else if(baudrate == 115200)
-        options.c_cflag = B115200 | CS8 | CREAD | CLOCAL;
-    // wait for 1ds on read
-    options.c_cc[VTIME] = 1;
-    // min number of bytes
-    options.c_cc[VMIN] = 8;
-
-    tcflush(mFile, TCIFLUSH);
-    tcsetattr(mFile, TCSANOW, &options);
-    
-    closeUart();
+    Serial.begin(baudrate);
 }
 
-void ModbusServer::openUart()
+void ModbusServer::setReg(uint16_t reg, uint16_t data)
 {
-    if((mFile = open("/dev/ttyS0", O_RDWR | O_NOCTTY)) < 0) // maybe needs: O_NDELAY
-    {
-        perror("Failed to open the file!\n");
-        return;
-    }
-}
-
-void ModbusServer::closeUart()
-{
-    close(mFile);
+    mServerRegister[reg] = data;
 }
 
 void ModbusServer::handleRequest()
@@ -59,24 +27,23 @@ void ModbusServer::handleRequest()
     uint8_t receiveMsg[8] = {0};
     if(receive(receiveMsg, sizeof(receiveMsg)) < 0)
     {
-        perror("No message received!\n");
+        // Serial.println("No message received!");
         return;
     }
 
-    printf("Received message: ");
+    // Serial.print("Received message: ");
     printMsg(receiveMsg, sizeof(receiveMsg));
-    printf("\n");
     
     uint16_t recCrc = (receiveMsg[6] << 8) | receiveMsg[7];
     uint16_t calcCrc = ModRTU_CRC(receiveMsg, sizeof(receiveMsg) - 2);
     if(recCrc != calcCrc)
     {
-        perror("CRC check failure!\n");
+        // Serial.println("CRC check failure!");
         return;
     }
     if(receiveMsg[0] != mServerNr)
     {
-        perror("Received message invalid!\n");
+        // Serial.println("Received message invalid!");
         return;
     }
 
@@ -99,12 +66,10 @@ void ModbusServer::handleRequest()
         sendMsg[5] = (uint8_t)(crc >> 8);
         sendMsg[6] = (uint8_t)crc;
 
-        // printf("reg: %d, data: %d\n", reg, data);
         send(sendMsg, sizeof(sendMsg));
 
-        printf("Sent message: ");
+        // Serial.print("Sent message: ");
         printMsg(sendMsg, sizeof(sendMsg));
-        printf("\n");
     }
     else if(receiveMsg[1] == 0x06)
     {
@@ -113,34 +78,35 @@ void ModbusServer::handleRequest()
         uint16_t data = (receiveMsg[4] << 8) | receiveMsg[5];
         mServerRegister[reg] = data;
 
-        // printf("reg: %d, data: %d\n", reg, data);
         send(receiveMsg, sizeof(receiveMsg));
 
-        printf("Sent message: ");
+        // Serial.print("Sent message: ");
         printMsg(receiveMsg, sizeof(receiveMsg));
-        printf("\n");
     }
 }
 
-
 int32_t ModbusServer::receive(uint8_t* msg, uint8_t len)
 {
-    if(read(mFile, msg, len) < 0)
+    // timeout after 1s of waiting
+    for(uint8_t i = 0; i < 100; i++)
     {
-        perror("Failed to read from the input!\n");
-        return -1;
+        if(Serial.available() > 0)
+        {
+            Serial.readBytes(msg, len);
+            return 0;
+        }
+        delay(10);
     }
-    return 0;
+    return -1;
 }
 
 void ModbusServer::send(uint8_t* msg, uint8_t len)
 {
-    if (write(mFile, msg, len) < 0)
+    for(uint8_t i = 0; i < len; i++)
     {
-        perror("Failed to write to the output!\n");
+        Serial.write(msg[i]);
     }
 }
-
 
 uint16_t ModbusServer::ModRTU_CRC(uint8_t buf[], int len)
 {
@@ -165,8 +131,10 @@ uint16_t ModbusServer::ModRTU_CRC(uint8_t buf[], int len)
 
 void ModbusServer::printMsg(uint8_t* msg, uint8_t len)
 {
+    char buffer[64] = {0};
     for(uint8_t i; i < len; i++)
     {
-        printf("%02X", msg[i]);
+        sprintf(&buffer[i * 2], "%02X", msg[i]);
     }
+    // Serial.println(buffer);
 }

@@ -11,12 +11,17 @@ public:
     virtual ~ModbusClient();
 
     // initialize client
-    void init(uint8_t serverNr, uint32_t baudrate);
+    void init(uint32_t baudrate);
+
+    // open UART
+    void openUart();
+    // close UART
+    void closeUart();
 
     // client function read
-    void read(uint16_t reg, uint16_t* data);
+    void readServer(uint8_t server, uint16_t reg, uint16_t* data);
     // client function write
-    void write(uint16_t reg, uint16_t data);
+    void writeServer(uint8_t server, uint16_t reg, uint16_t data);
 
 private:
 
@@ -32,6 +37,7 @@ private:
 
     // server number
     uint8_t mServerNr = 0;
+    int32_t mFile = 0;
 };
 
 #endif // ModbusClient_H
