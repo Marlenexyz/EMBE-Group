@@ -18,21 +18,20 @@ void Concrete_state_operational::on_do()
     
     if (this->context_->button.is_lo() || this->context_->fault.is_lo())
     {
-        this->context_->sleep.set_lo();
         this->context_->transition_to(new Concrete_state_stopped);
     }
 
     // if(this->context_->tau > 0)
     // {
-    //     Serial.print("Tau in µs: ");
-    //     Serial.println(this->context_->tau);
+    //     // Serial.print("Tau in µs: ");
+    //     // Serial.println(this->context_->tau);
     //     delay(1000000);
     // }
 }
 
 void Concrete_state_operational::on_entry()
 {
-    Serial.println("Transitioned to Operational state.");
+    // Serial.println("Transitioned to Operational state.");
     this->context_->led.set_hi();
 }
 
@@ -55,4 +54,9 @@ void Concrete_state_operational::on_event_set_pre_operational()
 void Concrete_state_operational::on_event_set_operational()
 {
 
+}
+
+void Concrete_state_operational::on_event_set_stopped()
+{
+    this->context_->transition_to(new Concrete_state_stopped);
 }

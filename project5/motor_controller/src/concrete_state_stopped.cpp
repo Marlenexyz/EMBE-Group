@@ -13,13 +13,14 @@ State::Name Concrete_state_stopped::getStateName()
 
 void Concrete_state_stopped::on_do()
 {
-    delay(1000); // blinking at 2 Hz
-    this->context_->led.toggle();
+    // delay(1000); // blinking at 2 Hz
+    // this->context_->led.toggle();
 }
 
 void Concrete_state_stopped::on_entry()
 {
-    Serial.println("Transitioned to Stopped state.");
+    // Serial.println("Transitioned to Stopped state.");
+    this->context_->sleep.set_lo();
 }
 
 void Concrete_state_stopped::on_exit()
@@ -41,4 +42,9 @@ void Concrete_state_stopped::on_event_set_pre_operational()
 void Concrete_state_stopped::on_event_set_operational()
 {
     this->context_->transition_to(new Concrete_state_operational);
+}
+
+void Concrete_state_stopped::on_event_set_stopped()
+{
+    
 }

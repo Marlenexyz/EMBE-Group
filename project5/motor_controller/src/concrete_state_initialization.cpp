@@ -16,7 +16,7 @@ void Concrete_state_initialization::on_do()
 
 void Concrete_state_initialization::on_entry()
 {
-    Serial.println("Transitioned to Initialization state.");
+    // Serial.println("Transitioned to Initialization state.");
 
     // initialize all pins and controllers
     this->context_->button.init();
@@ -47,6 +47,11 @@ void Concrete_state_initialization::on_event_set_pre_operational()
 }
 
 void Concrete_state_initialization::on_event_set_operational()
+{
+
+}
+
+void Concrete_state_initialization::on_event_set_stopped()
 {
 
 }
