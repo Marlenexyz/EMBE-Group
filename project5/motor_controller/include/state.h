@@ -52,6 +52,8 @@ public:
 
     virtual void on_event_set_operational() = 0;
 
+    virtual void on_event_set_stopped() = 0;
+
     // ...
 };
 

@@ -60,8 +60,8 @@ unsigned long Encoder::getTau()
     {
         unsigned long period = mCrtTime - mLastTime;
         mOmega = 2.0f * 3.1415926535f / (static_cast<float>(period) * 700.0f / 1000000.0f);
-        Serial.print("rps: ");
-        Serial.print(1 / (static_cast<float>(period) * 700.0f / 1000000.0f));
+        // Serial.print("rps: ");
+        // Serial.print(1 / (static_cast<float>(period) * 700.0f / 1000000.0f));
 
         if (mOmega >= 0.63 * mOmegaMax)
         {

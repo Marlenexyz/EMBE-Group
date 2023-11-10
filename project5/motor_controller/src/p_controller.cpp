@@ -37,17 +37,17 @@ float P_controller::update(float ref, float actual)
     updateSpeed(duty);
 
     // print values
-    Serial.print("w_ref: ");
-    Serial.print(ref);
-    Serial.print(", w: ");
-    Serial.print(actual);
-    Serial.print(", duty: ");
-    if (duty > 1.0f)
-        Serial.println(1.0f);
-    else if (duty < -1.0f)
-        Serial.println(-1.0f);
-    else
-        Serial.println(duty);
+    // Serial.print("w_ref: ");
+    // Serial.print(ref);
+    // Serial.print(", w: ");
+    // Serial.print(actual);
+    // Serial.print(", duty: ");
+    // if (duty > 1.0f)
+        // Serial.println(1.0f);
+    // else if (duty < -1.0f)
+        // Serial.println(-1.0f);
+    // else
+        // Serial.println(duty);
 
     // return new speed value
     return value;

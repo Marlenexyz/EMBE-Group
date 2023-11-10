@@ -46,17 +46,17 @@ float PI_controller::update(float ref, float actual)
     updateSpeed(mDuty);
 
     // print values
-    Serial.print("w_ref: ");
-    Serial.print(ref);
-    Serial.print(", w: ");
-    Serial.print(actual);
-    Serial.print(", duty: ");
+    // Serial.print("w_ref: ");
+    // Serial.print(ref);
+    // Serial.print(", w: ");
+    // Serial.print(actual);
+    // Serial.print(", duty: ");
     if (mDuty > 1.0f)
-        Serial.println(1.0f);
+        // Serial.println(1.0f);
     else if (mDuty < -1.0f)
-        Serial.println(-1.0f);
+        // Serial.println(-1.0f);
     else
-        Serial.println(mDuty);
+        // Serial.println(mDuty);
 
     // return new speed value
     return value;

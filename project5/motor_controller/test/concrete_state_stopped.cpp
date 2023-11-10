@@ -19,7 +19,7 @@ void Concrete_state_stopped::on_do()
 
 void Concrete_state_stopped::on_entry()
 {
-    Serial.println("Transitioned to Stopped state.");
+    // Serial.println("Transitioned to Stopped state.");
 }
 
 void Concrete_state_stopped::on_exit()
