@@ -12,8 +12,8 @@ State::Name Concrete_state_pre_operational::getStateName()
 
 void Concrete_state_pre_operational::on_do()
 {
-    delay(500); // blinking at 1 Hz
-    this->context_->led.toggle();
+    // delay(500); // blinking at 1 Hz
+    // this->context_->led.toggle();
 }
 
 void Concrete_state_pre_operational::on_entry()
@@ -45,9 +45,6 @@ void Concrete_state_pre_operational::on_entry()
     // }
     // // Serial.println(".");
 
-    //For TDD set controller Pi
-    this->context_->controller.setController(Controller::Type::PI_CONTROLLER);
-
     // Initialize controller
     this->context_->controller.init(OMEGA_MAX);
 
@@ -65,10 +62,6 @@ void Concrete_state_pre_operational::on_entry()
     // // Serial.print("   ...Kp value set to ");
     // // Serial.print(value);
     // // Serial.println(".");
-
-    //Set Kp value for TDD
-    float value = 6.5;
-    this->context_->controller.setKp(value);
 
     // if(this->context_->controller.getType() == Controller::Type::PI_CONTROLLER)
     // {
@@ -90,9 +83,13 @@ void Concrete_state_pre_operational::on_entry()
 
     // // Serial.println("Presets finished...");
 
-    //set value for Ti for TDD
-    value = 20;
-    this->context_->controller.setTi(value / 1000.0f);
+
+    // Set controller manually
+    this->context_->controller.setController(Controller::Type::P_CONTROLLER);
+    // Set Kp value manually
+    this->context_->controller.setKp(7.5f);
+    // Set Ti value manually
+    // this->context_->controller.setTi(20.0f / 1000.0f);
 
 }
 

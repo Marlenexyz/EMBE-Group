@@ -4,7 +4,7 @@
 ModbusServer modbus;
 uint16_t registerNr = 0x0000;
 
-int sensorPin = A0;
+// int sensorPin = A0;
 const int opPin = 2;
 const int stopPin = 3;
 const int preOpPin = 4;

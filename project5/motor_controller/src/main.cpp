@@ -12,7 +12,7 @@ ModbusServer modbus;
 
 void setup()
 {
-    Serial.begin(115200);
+    Serial.begin(9600);
     context = new Context(new Concrete_state_initialization);
 
     modbus.init(0x02, 9600);

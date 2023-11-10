@@ -13,8 +13,8 @@ State::Name Concrete_state_stopped::getStateName()
 
 void Concrete_state_stopped::on_do()
 {
-    delay(1000); // blinking at 2 Hz
-    this->context_->led.toggle();
+    // delay(1000); // blinking at 2 Hz
+    // this->context_->led.toggle();
 }
 
 void Concrete_state_stopped::on_entry()

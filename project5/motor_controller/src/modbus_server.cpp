@@ -15,6 +15,7 @@ void ModbusServer::init(uint8_t serverNr, uint32_t baudrate)
 {
     mServerNr = serverNr;
     Serial.begin(baudrate);
+    // Serial.setTimeout(500);
 }
 
 void ModbusServer::setReg(uint16_t reg, uint16_t data)
@@ -112,10 +113,12 @@ int32_t ModbusServer::receive(uint8_t* msg, uint8_t len)
 
 void ModbusServer::send(uint8_t* msg, uint8_t len)
 {
-    for(uint8_t i = 0; i < len; i++)
-    {
-        Serial.write(msg[i]);
-    }
+    Serial.write(msg, len);
+    Serial.flush();
+    // for(uint8_t i = 0; i < len; i++)
+    // {
+    //     Serial.write(msg[i]);
+    // }
 }
 
 uint16_t ModbusServer::ModRTU_CRC(uint8_t buf[], int len)
