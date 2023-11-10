@@ -68,7 +68,7 @@ void ModbusClient::readServer(uint8_t server, uint16_t reg, uint16_t* data)
     sendMsg[7] = (uint8_t)crc;
 
     send(sendMsg, SEND_LEN);
-    // printf("Sent request:  ");
+   // printf("Sent request:  ");
     printMsg(sendMsg, SEND_LEN);
     usleep(100000);
 
@@ -79,7 +79,7 @@ void ModbusClient::readServer(uint8_t server, uint16_t reg, uint16_t* data)
         perror("No message received!\n");
         return;
     }
-    // printf("Received reply:");
+   // printf("Received reply:");
     printMsg(receiveMsg, RECEIVE_LEN);
 
     uint16_t recCrc = (receiveMsg[5] << 8) | receiveMsg[6];
@@ -117,7 +117,7 @@ void ModbusClient::writeServer(uint8_t server, uint16_t reg, uint16_t data)
     sendMsg[7] = (uint8_t)crc;
 
     send(sendMsg, SEND_LEN);
-    // printf("Sent request:  ");
+   // printf("Sent request:  ");
     printMsg(sendMsg, SEND_LEN);
     usleep(100000);
 
@@ -128,7 +128,7 @@ void ModbusClient::writeServer(uint8_t server, uint16_t reg, uint16_t data)
         perror("No message received!\n");
         return;
     }
-    // printf("Received reply:");
+   // printf("Received reply:");
     printMsg(receiveMsg, RECEIVE_LEN);
 
     for(uint8_t i = 0; i < RECEIVE_LEN; i++)
@@ -185,7 +185,7 @@ void ModbusClient::printMsg(uint8_t* msg, uint8_t len)
     char buffer[64] = {0};
     for(uint8_t i; i < len; i++)
     {
-        // sprintf(&buffer[i * 3], " %02X", msg[i]);
+        sprintf(&buffer[i * 3], " %02X", msg[i]);
     }
-    // printf("%s\n", buffer);
+   // printf("%s\n", buffer);
 }

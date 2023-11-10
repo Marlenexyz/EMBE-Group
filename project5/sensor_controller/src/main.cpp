@@ -4,7 +4,7 @@
 ModbusServer modbus;
 uint16_t registerNr = 0x0000;
 
-// int sensorPin = A0;
+int sensorPin = A0;
 const int opPin = 2;
 const int stopPin = 3;
 const int preOpPin = 4;
@@ -30,9 +30,9 @@ void loop()
     // handle client requests
     modbus.handleRequest();
 
-    // int sensorValue = analogRead(sensorPin);
-    // sprintf(buffer,"%d\n",sensorValue);
-    // Serial.print(buffer);
+    uint16_t sensorValue = static_cast<float>(analogRead(sensorPin)) / 1023.0f * 12.48f * 100.0f;
+    modbus.setReg(0x0001, sensorValue);
+    // Serial.println(sensorValue);
 
     if (!digitalRead(opPin))
     {
