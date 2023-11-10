@@ -123,6 +123,8 @@ public:
     Motor_controller controller;
 
     unsigned long tau;
+
+public:
     float omega;
     float omegaRef;
 

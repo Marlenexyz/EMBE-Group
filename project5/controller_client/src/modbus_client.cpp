@@ -28,9 +28,9 @@ void ModbusClient::init(uint32_t baudrate)
     else if(baudrate == 115200)
         options.c_cflag = B115200 | CS8 | CREAD | CLOCAL;
     // wait for 1ds on read
-    options.c_cc[VTIME] = 1;
+    options.c_cc[VTIME] = 5;
     // min number of bytes
-    options.c_cc[VMIN] = 8;
+    options.c_cc[VMIN] = 1;
 
     tcflush(mFile, TCIFLUSH);
     tcsetattr(mFile, TCSANOW, &options);
@@ -54,7 +54,8 @@ void ModbusClient::closeUart()
 
 void ModbusClient::readServer(uint8_t server, uint16_t reg, uint16_t* data)
 {
-    uint8_t sendMsg[8] = {0};
+    const uint8_t SEND_LEN = 8;
+    uint8_t sendMsg[SEND_LEN] = {0};
     sendMsg[0] = server;
     sendMsg[1] = 0x03;
     sendMsg[2] = (uint8_t)(reg >> 8);
@@ -62,26 +63,27 @@ void ModbusClient::readServer(uint8_t server, uint16_t reg, uint16_t* data)
     sendMsg[4] = 0x00;
     sendMsg[5] = 0x01;
 
-    uint16_t crc = ModRTU_CRC(sendMsg, sizeof(sendMsg) - 2);
+    uint16_t crc = ModRTU_CRC(sendMsg, SEND_LEN - 2);
     sendMsg[6] = (uint8_t)(crc >> 8);
     sendMsg[7] = (uint8_t)crc;
 
-    send(sendMsg, sizeof(sendMsg));
-    printf("Sent request:  ");
-    printMsg(sendMsg, sizeof(sendMsg));
+    send(sendMsg, SEND_LEN);
+    // printf("Sent request:  ");
+    printMsg(sendMsg, SEND_LEN);
     usleep(100000);
 
-    uint8_t receiveMsg[7] = {0};
-    if(receive(receiveMsg, sizeof(receiveMsg)) < 0)
+    const uint8_t RECEIVE_LEN = 7;
+    uint8_t receiveMsg[RECEIVE_LEN] = {0};
+    if(receive(receiveMsg, RECEIVE_LEN) < 0)
     {
         perror("No message received!\n");
         return;
     }
-    printf("Received reply:");
-    printMsg(receiveMsg, sizeof(receiveMsg));
+    // printf("Received reply:");
+    printMsg(receiveMsg, RECEIVE_LEN);
 
     uint16_t recCrc = (receiveMsg[5] << 8) | receiveMsg[6];
-    uint16_t calcCrc = ModRTU_CRC(receiveMsg, sizeof(receiveMsg) - 2);
+    uint16_t calcCrc = ModRTU_CRC(receiveMsg, RECEIVE_LEN - 2);
     if(recCrc != calcCrc)
     {
         perror("CRC check failure!\n");
@@ -97,12 +99,12 @@ void ModbusClient::readServer(uint8_t server, uint16_t reg, uint16_t* data)
 
     // read data
     *data = (receiveMsg[3] << 8) | receiveMsg[4];
-    printf("Received data: %d", *data);
 }
 
 void ModbusClient::writeServer(uint8_t server, uint16_t reg, uint16_t data)
 {
-    uint8_t sendMsg[8] = {0};
+    const uint8_t SEND_LEN = 8;
+    uint8_t sendMsg[SEND_LEN] = {0};
     sendMsg[0] = server;
     sendMsg[1] = 0x06;
     sendMsg[2] = (uint8_t)(reg >> 8);
@@ -110,25 +112,26 @@ void ModbusClient::writeServer(uint8_t server, uint16_t reg, uint16_t data)
     sendMsg[4] = (uint8_t)(data >> 8);
     sendMsg[5] = (uint8_t)data;
 
-    uint16_t crc = ModRTU_CRC(sendMsg, sizeof(sendMsg) - 2);
+    uint16_t crc = ModRTU_CRC(sendMsg, SEND_LEN - 2);
     sendMsg[6] = (uint8_t)(crc >> 8);
     sendMsg[7] = (uint8_t)crc;
 
-    send(sendMsg, sizeof(sendMsg));
-    printf("Sent request:  ");
-    printMsg(sendMsg, sizeof(sendMsg));
+    send(sendMsg, SEND_LEN);
+    // printf("Sent request:  ");
+    printMsg(sendMsg, SEND_LEN);
     usleep(100000);
 
-    uint8_t receiveMsg[8] = {0};
-    if(receive(receiveMsg, sizeof(receiveMsg)) < 0)
+    const uint8_t RECEIVE_LEN = 8;
+    uint8_t receiveMsg[RECEIVE_LEN] = {0};
+    if(receive(receiveMsg, RECEIVE_LEN) < 0)
     {
         perror("No message received!\n");
         return;
     }
-    printf("Received reply:");
-    printMsg(receiveMsg, sizeof(receiveMsg));
+    // printf("Received reply:");
+    printMsg(receiveMsg, RECEIVE_LEN);
 
-    for(uint8_t i = 0; i < sizeof(receiveMsg); i++)
+    for(uint8_t i = 0; i < RECEIVE_LEN; i++)
     {
         if(receiveMsg[i] != sendMsg[i])
         {
@@ -182,7 +185,7 @@ void ModbusClient::printMsg(uint8_t* msg, uint8_t len)
     char buffer[64] = {0};
     for(uint8_t i; i < len; i++)
     {
-        sprintf(&buffer[i * 3], " %02X", msg[i]);
+        // sprintf(&buffer[i * 3], " %02X", msg[i]);
     }
-    printf("%s\n", buffer);
+    // printf("%s\n", buffer);
 }

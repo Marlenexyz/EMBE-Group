@@ -12,17 +12,28 @@ int main(int argc, char** argv)
 
     while(1)
     {
-        uint16_t = data = 0xFFFF;
+        uint16_t data = 0xFFFF;
         modbus.readServer(0x01, 0x0000, &data);
-        printf("data read from server 0x01: %d\n", data);
+        // printf("data read from server 0x01: %d\n", data);
 
         if(data == 0x0082)
         {
             // std::system("sudo reboot");
         }
+        usleep(1000);
         
         modbus.writeServer(0x02, 0x0000, data);
-        sleep(5);
+        usleep(1000);
+        
+        int16_t omegaRef = 800;
+        modbus.writeServer(0x02, 0x0001, omegaRef);
+        usleep(1000);
+        
+        int16_t omega = 0;
+        modbus.readServer(0x02, 0x0002, reinterpret_cast<uint16_t*>(&omega));
+        usleep(1000);
+
+        printf("w_ref: %.2f, w: %.2f\n", static_cast<float>(omegaRef) / 100.0f, static_cast<float>(omega) / 100.0f);
     }
     
     // modbus.closeUart();

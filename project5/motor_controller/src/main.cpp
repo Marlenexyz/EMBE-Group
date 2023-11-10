@@ -12,10 +12,8 @@ ModbusServer modbus;
 
 void setup()
 {
-    Serial.begin(9600);
-    context = new Context(new Concrete_state_initialization);
-
     modbus.init(0x02, 9600);
+    context = new Context(new Concrete_state_initialization);
 }
 
 void loop()
@@ -28,6 +26,13 @@ void loop()
 
     uint16_t command = 0;
     modbus.getReg(0x0000, &command);
+
+    int16_t omegaRef = 0;
+    modbus.getReg(0x0001, reinterpret_cast<uint16_t*>(&omegaRef));
+    context->omegaRef = static_cast<float>(omegaRef) / 100.0f;
+
+    int16_t omega = static_cast<int16_t>(context->omega * 100.0f);
+    modbus.setReg(0x0002, omega);
 
     // you can compare the value received to a character constant, like 'r'.
     switch (command)
